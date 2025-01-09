@@ -8,7 +8,6 @@
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
-#include <openssl/core_names.h>
 #include <curl/curl.h>
 #include <stdbool.h>
 #include <locale.h>
