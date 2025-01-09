@@ -1,0 +1,38 @@
+CC = gcc
+
+# 라이브러리 경로
+CURL_PREFIX = /usr
+OPENSSL_PREFIX = /usr/local/openssl-3.4.0
+JSONC_PREFIX = /usr
+PAM_PREFIX = /usr/local/libpam
+
+CFLAGS = -fPIC -I$(CURL_PREFIX)/include -I$(OPENSSL_PREFIX)/include -I$(JSONC_PREFIX)/include
+LDFLAGS = -shared -fPIC -L$(CURL_PREFIX)/lib64 -L$(OPENSSL_PREFIX)/lib64 -L$(JSONC_PREFIX)/lib64 -L$(PAM_PREFIX)/lib -Wl,-rpath=$(OPENSSL_PREFIX)/lib64
+
+LIBS = -lcurl -lcrypto -lssl -ljson-c -lpam -lcrypt -luuid
+
+TARGET = nda-pam.so
+PAM_MODULE_SRC = nd_nix_pam.c
+ND_UTILS_C = ./libsrc/nd_utils.c
+ND_UTILS_H = ./libsrc/nd_utils.h
+ND_LOGS_C = ./libsrc/nd_nix_logs.c
+ND_LOGS_H = ./libsrc/nd_nix_logs.h
+ND_RESTAPI_C = ./libsrc/nd_restapi_func.c
+ND_RESTAPI_H = ./libsrc/nd_restapi_func.h
+
+SRCS = $(PAM_MODULE_SRC) $(ND_UTILS_C) $(ND_LOGS_C) $(ND_RESTAPI_C)
+OBJS = $(SRCS:.c=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+.PHONY: all clean
+

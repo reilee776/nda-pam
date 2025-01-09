@@ -1,0 +1,51 @@
+CC = gcc
+CURL_PREFIX = /src/utils/curl/install/curl-8.11.0
+
+OPENSSL_PREFIX = /usr/local/openssl-3.4.0
+OPENSSL_LIB = $(OPENSSL_PREFIX)/lib64
+OPENSSL_INCLUDE = $(OPENSSL_PREFIX)/include
+
+#CFLAGS = -fPIC -I$(OPENSSL_INCLUDE)  -I$(CURL_PREFIX)/include
+CFLAGS = -fPIC -I$(CURL_PREFIX)/include
+#LDFLAGS = -shared -lcrypt -lprotobuf-c -luuid -L$(OPENSSL_LIB) -lcrypto -ljson-c -lpam -L$(CURL_PREFIX)/lib -lcurl -Wl,-rpath,$(OPENSSL_LIB)
+#LDFLAGS = -shared -lcrypt -lprotobuf-c -luuid  -L$(OPENSSL_LIB) -Wl,-rpath=$(OPENSSL_LIB)  -lcrypto -ljson-c -lpam -L$(CURL_PREFIX)/lib -lcurl
+#LDFLAGS = -shared -lcrypt -luuid  -L$(OPENSSL_LIB) -Wl,-rpath=$(OPENSSL_LIB)  -lcrypto -ljson-c -lpam -L$(CURL_PREFIX)/lib -lcurl
+LDFLAGS = -shared -lcrypt -luuid  -L$(OPENSSL_LIB) -Wl,-rpath=$(OPENSSL_LIB)  -lcrypto -lcurl -ljson-c -lpam -static
+
+TARGET = nda-pam.so
+
+PAM_MODULE_SRC = nd_nix_pam.c
+
+ND_UTILS_C = ./libsrc/nd_utils.c
+ND_UTILS_H = ./libsrc/nd_utils.h
+
+ND_LOGS_C = ./libsrc/nd_nix_logs.c
+ND_LOGS_H = ./libsrc/nd_nix_logs.h
+
+ND_RESTAPI_C = ./libsrc/nd_restapi_func.c
+ND_RESTAPI_H = ./libsrc/nd_restapi_func.h
+
+
+all: $(TARGET)
+
+pam_module.o: $(PAM_MODULE_SRC) $(OPENSSL_H) $(ND_UTILS_C)
+	$(CC) $(CFLAGS) -c $(PAM_MODULE_SRC)
+
+
+nd_utils.o: $(ND_UTILS_C)
+	$(CC) $(CFLAGS) -c $(ND_UTILS_C)
+
+nd_nix_logs.o : $(ND_LOGS_C)
+	$(CC) $(CFLAGS) -c $(ND_LOGS_C)
+
+nd_restapi_func.o : $(ND_RESTAPI_C)
+	$(CC) $(CFLAGS) -c $(ND_RESTAPI_C)
+
+$(TARGET): nd_nix_pam.o nd_utils.o nd_nix_logs.o nd_restapi_func.o
+	$(CC) $(LDFLAGS) -o $(TARGET) nd_nix_pam.o nd_utils.o nd_nix_logs.o nd_restapi_func.o
+
+clean:
+	rm -f nd_nix_pam.o nd_utils.o nd_nix_logs.o nd_restapi_func.o $(TARGET)
+
+.PHONY: all clean
+
