@@ -2,7 +2,7 @@ CC = gcc
 
 # Library and include paths
 LIB_DIR = ./lib
-CFLAGS = -fPIC -I$(LIB_DIR)/include -Wall -Wextra -g
+CFLAGS = -fPIC -I$(LIB_DIR)/include -Wall -Wextra -g -std=c99
 LDFLAGS = -shared -fPIC -L$(LIB_DIR) -Wl,-rpath,'$$ORIGIN/../lib'
 
 # Libraries to link against
