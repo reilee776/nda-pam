@@ -1,3 +1,121 @@
+#include <security/pam_appl.h>
+#include <security/pam_modules.h>
+#include <security/pam_ext.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <syslog.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <time.h>
+#include <pwd.h>
+#include <shadow.h>
+#include <crypt.h>
+#include "common.h"
+#include <errno.h>
+#include <sys/select.h>
+#include <arpa/inet.h>
+#include <ctype.h>
+#include <pthread.h>
+#include <sys/time.h>
+#include <sys/file.h>
+#include <uuid/uuid.h>
+#include "./libsrc/nd_utils.h"
+#include "./libsrc/nd_nix_logs.h"
+#include "./libsrc/nd_restapi_func.h"
+#include <json-c/json.h>
+#include <curl/curl.h>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <dlfcn.h>
+/*
+////////////
+*/
+typedef RSA *(*RSA_NEW_FUNC)(void);
+typedef BIGNUM *(*BN_NEW_FUNC)(void);
+typedef int (*RSA_GEN_FUNC)(RSA *, int, BIGNUM *, void *);
+typedef void (*RSA_FREE_FUNC)(RSA *);
+typedef void (*BN_FREE_FUNC)(BIGNUM *);
+typedef int (*PEM_WRITE_BIO_PRIV_FUNC)(BIO *, RSA *);
+
+#define RSA_KEY_BITS 2048
+
+int g_nFailCnt = 0;
+//void nd_pam_log(int level, char* filename, int line, const char *fmt, ...);
+
+char * g_sDataIssueKey;
+char * g_sDataRandomKey;
+char * g_sDataAuthKey;
+char * g_sDataSecretKey;
+char * g_sUserNumber;
+
+char * g_sDataUserLoginResult;
+char * g_sDataTemporaryAccessKey;
+char * g_sDataHiwareUserNumber;
+
+char g_sDataRandomUrl[MAX_URL_LEN];
+char g_sDataUserLoginUrl[MAX_URL_LEN];
+char g_sDataSystemLoginUrl[MAX_URL_LEN];
+char g_sDataTwoFactLoginIrl[MAX_URL_LEN];
+
+char * g_sDataProductNm;
+
+char * g_sDataRootDir;
+int g_nDataSshPort = 0;
+
+char * g_sConfFilePath;
+
+char g_sDataAgentId[2];
+/////////
+//static const char *current_user;
+
+pthread_mutex_t session_id_mutex;
+
+/*
+*/
+#define PAM_HIWARE_SSH_SERVER_IP        "HIWARE_SSH_CLIENT_IP"
+#define PAM_HIWARE_SSH_SERVER_PORT      "HIWARE_SSH_SERVER_PORT"
+#define PAM_HIWARE_SSH_CLIENT_IP        "HIWARE_SSH_CLIENT_IP"
+#define PAM_HIWARE_SSH_CLIENT_PORT      "HIWARE_SSH_CLIENT_PORT"
+
+
+
+typedef struct {
+        bool pamPolicyValid;
+        bool samPolicyValid;
+
+        int pam_pri_no;
+        int pam_action;
+        int pam_logging;
+        char* pam_agtAuthNo;
+
+        int sam_pri_no;
+        int sam_action;
+        int sam_logging;
+        char* sam_agtAuthNo;
+} PolicyValidationResult;
+
+
+//nd_pam_sulog
+#define nd_sulog(level, fmt, ...) nd_pam_sulog(level, __FILENAME__, __LINE__, fmt, ##__VA_ARGS__)
+
+char g_sAccount[256];
+char g_szLoginUserOrgName[1024];
+char g_szHiwareAccount[256];
+
+#define ESC "\033"
+#define MAX_ATTEMPTS 3
+
+bool g_isLogin = false;
+
+int authentication_failed = 0;
+struct st_hiauth_item nd_hiauth_item[] = {
+        {HIAUTH_ID, "Hiware User: "},
+        {HIAUTH_PW, "Hiware Password: "},
+};
+
+struct st_log_level
 nd_log_level[] = {
         {NDLOG_INF, "INF"},
         {NDLOG_WAN,"WAN"},
