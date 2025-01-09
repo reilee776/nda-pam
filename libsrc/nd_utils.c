@@ -24,6 +24,9 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
+
+#define _GNU_SOURCE
+
 #include <netdb.h>
 
 #include <sys/ioctl.h>
