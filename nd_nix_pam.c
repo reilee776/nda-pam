@@ -1,4 +1,3 @@
-
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
 #include <security/pam_ext.h>
@@ -30,10 +29,6 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <dlfcn.h>
-
-/*
-////////////
-*/
 typedef RSA *(*RSA_NEW_FUNC)(void);
 typedef BIGNUM *(*BN_NEW_FUNC)(void);
 typedef int (*RSA_GEN_FUNC)(RSA *, int, BIGNUM *, void *);
@@ -64,7 +59,6 @@ char g_sDataTwoFactLoginIrl[MAX_URL_LEN];
 char * g_sDataProductNm;
 
 char * g_sDataRootDir;
-
 int g_nDataSshPort = 0;
 
 char * g_sConfFilePath;
