@@ -863,70 +863,14 @@ int nd_pam_authenticate_user(char *uuid_str, /*struct pam_user_info*/ SessionInf
 	char sTwoFactString[128];
 	char sDataEnv_var[MAX_ENV_STR_LEN];
 
-	char svrConnStartTime[ND_TIME_MAX_LEN] = {
-		0,
-	},
-		 svrConnEndTime[ND_TIME_MAX_LEN] = {
-			 0,
-		 },
-		 svrConnRstTpCode[4] = {
-			 0,
-		 },
-		 svrConnFailRsnCode[4] = {
-			 0,
-		 },
-		 agtNo[16] = {
-			 0,
-		 },
-		 agtConnFormTpCode[4] = {
-			 0,
-		 },
-		 agtAuthNo[ND_AGTAUTHNO_MAX_LEN] = {
-			 0,
-		 },
-		 portNo[8] = {
-			 0,
-		 },
-		 userIp[ND_SOURCEIP_MAX_LEN] = {
-			 0,
-		 },
-		 securStepNo[ND_SECUR_STEP_NO_MAX_LEN] = {
-			 0,
-		 },
-		 svrConnSessKey[ND_UUID_LENGTH] = {
-			 0,
-		 },
-		 connAcctId[ND_SYSACCOUNT_MAX_LEN] = {
-			 0,
-		 },
-		 switchAcctId[ND_SYSACCOUNT_MAX_LEN] = {
-			 0,
-		 },
-		 pamAgtAuthNo[ND_AGTAUTHNO_MAX_LEN] = {
-			 0,
-		 },
-		 userNo[18] = {
-			 0,
-		 },
-		 pamCertDtlCode[4] = {
-			 0,
-		 },
-		 pamCertDtlAuthCode[4] = {
-			 0,
-		 };
+	char svrConnStartTime[ND_TIME_MAX_LEN] = {0,}, svrConnEndTime[ND_TIME_MAX_LEN] = { 0,}, svrConnRstTpCode[4] = { 0, },
+		 svrConnFailRsnCode[4] = { 0,}, agtNo[16] = { 0,}, agtConnFormTpCode[4] = { 0,}, agtAuthNo[ND_AGTAUTHNO_MAX_LEN] = { 0, }, portNo[8] = {0,},
+		 userIp[ND_SOURCEIP_MAX_LEN] = { 0,}, securStepNo[ND_SECUR_STEP_NO_MAX_LEN] = { 0,}, svrConnSessKey[ND_UUID_LENGTH] = {0,},
+		 connAcctId[ND_SYSACCOUNT_MAX_LEN] = { 0,}, switchAcctId[ND_SYSACCOUNT_MAX_LEN] = { 0,}, pamAgtAuthNo[ND_AGTAUTHNO_MAX_LEN] = {0,},
+		 userNo[18] = { 0,}, pamCertDtlCode[4] = { 0,}, pamCertDtlAuthCode[4] = { 0,};
 
-	char certTpCode[ND_CERT_TP_CODE_MAX_LEN] = {
-		0,
-	},
-		 certAppTpCode[ND_CERT_APP_TP_CODE_MAX_LEN] = {
-			 0,
-		 },
-		 certSucesFailYn[ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN] = {
-			 0,
-		 },
-		 certStepSeqNo[ND_CERT_STEP_SEQ_NO_MAX_LEN] = {
-			 0,
-		 };
+	char certTpCode[ND_CERT_TP_CODE_MAX_LEN] = { 0,}, certAppTpCode[ND_CERT_APP_TP_CODE_MAX_LEN] = { 0, },
+	     certSucesFailYn[ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN] = {	0,}, certStepSeqNo[ND_CERT_STEP_SEQ_NO_MAX_LEN] = { 0,};
 
 	char *agt_auth_no, *ndshell_agtAuthNo, *agent_id;
 
@@ -1787,9 +1731,9 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 			{
 				if (pam_action == PAM_ACT_RULE_DENY)
 				{
-					snprintf(svrConnFailRsnCode, sizeof(svrConnFailRsnCode), PAM_SVR_FAIL_OS_AUTH_FAIL);
-					snprintf(svrConnRstTpCode, sizeof(svrConnRstTpCode), "%s", PAM_AUTH_FAIL);
-					snprintf(pamCertDtlAuthCode, sizeof(pamCertDtlAuthCode), "%s", PAM_CERT_DTL_AUTH_PAM_RULE);
+					snprintf(svrConnFailRsnCode, 	sizeof(svrConnFailRsnCode), PAM_SVR_FAIL_OS_AUTH_FAIL);
+					snprintf(svrConnRstTpCode, 		sizeof(svrConnRstTpCode), 	"%s", PAM_AUTH_FAIL);
+					snprintf(pamCertDtlAuthCode, 	sizeof(pamCertDtlAuthCode), "%s", PAM_CERT_DTL_AUTH_PAM_RULE);
 
 					//
 					///
@@ -1818,17 +1762,17 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 				if (validate_json_sampolicy_without_date(getPamRuleFilePath(sDataHomeDir), info->remote_host, info->target_user, &ndshell_agtAuthNo,
 														 &sam_action, &sam_logging) == 1)
 				{
-					snprintf(agtNo, sizeof(agtNo), "%s", agent_id);
-					snprintf(agtConnFormTpCode, sizeof(agtConnFormTpCode), "%s", PAM_CONN_BYPASS);
-					snprintf(agtAuthNo, sizeof(agtAuthNo), "%s", ndshell_agtAuthNo ? ndshell_agtAuthNo : "");
-					snprintf(userIp, sizeof(userIp), "%s", info->remote_host ? info->remote_host : "");
-					snprintf(securStepNo, sizeof(securStepNo), "%s", PAM_SECUR_STEP_NDSHELL);
-					snprintf(svrConnSessKey, sizeof(svrConnSessKey), "%s", uuid_str ? uuid_str : "");
-					snprintf(connAcctId, sizeof(connAcctId), "%s", info->target_user ? info->target_user : "");
-					snprintf(switchAcctId, sizeof(switchAcctId), "%s", info->current_user ? info->current_user : "");
-					snprintf(pamAgtAuthNo, sizeof(pamAgtAuthNo), "%s", agt_auth_no ? agt_auth_no : "");
-					snprintf(pamCertDtlCode, sizeof(pamCertDtlCode), "%s", PAM_SU_LOGIN);
-					snprintf(pamCertDtlAuthCode, sizeof(pamCertDtlAuthCode), "%s", PAM_CERT_DTL_AUTH_SAM_RULE);
+					snprintf(agtNo, 			sizeof(agtNo), 				"%s", agent_id);
+					snprintf(agtConnFormTpCode, sizeof(agtConnFormTpCode), 	"%s", PAM_CONN_BYPASS);
+					snprintf(agtAuthNo, 		sizeof(agtAuthNo), 			"%s", ndshell_agtAuthNo ? ndshell_agtAuthNo : "");
+					snprintf(userIp, 			sizeof(userIp), 			"%s", info->remote_host ? info->remote_host : "");
+					snprintf(securStepNo, 		sizeof(securStepNo), 		"%s", PAM_SECUR_STEP_NDSHELL);
+					snprintf(svrConnSessKey, 	sizeof(svrConnSessKey), 	"%s", uuid_str ? uuid_str : "");
+					snprintf(connAcctId, 		sizeof(connAcctId), 		"%s", info->target_user ? info->target_user : "");
+					snprintf(switchAcctId, 		sizeof(switchAcctId), 		"%s", info->current_user ? info->current_user : "");
+					snprintf(pamAgtAuthNo, 		sizeof(pamAgtAuthNo), 		"%s", agt_auth_no ? agt_auth_no : "");
+					snprintf(pamCertDtlCode, 	sizeof(pamCertDtlCode), 	"%s", PAM_SU_LOGIN);
+					snprintf(pamCertDtlAuthCode,sizeof(pamCertDtlAuthCode), "%s", PAM_CERT_DTL_AUTH_SAM_RULE);
 
 					if (sam_action == PAM_USER_RULE_ACT_DENY)
 					{
@@ -1922,10 +1866,6 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags,
 PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 								   int argc, const char **argv)
 {
-	(void)flags;
-	(void)argc;
-	(void)argv;
-
 	bool bIsConsole = false;
 	struct st_pam_conf pam_conf;
 	const char *sDataHomeDir = pam_getenv(pamh, ENV_HIWARE_HOME);
@@ -1939,8 +1879,8 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 		g_sConfFilePath = strdup(getPamConfFilePath(sDataHomeDir));
 
 	/*
-				// get pam config
-		*/
+		// get pam config
+	*/
 	getpamconf(&pam_conf);
 	if (pam_conf.pam_operate_mode != MODE_ON)
 		return PAM_SUCCESS;
@@ -1956,6 +1896,22 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 		bIsConsole = true;
 
 	parse_ssh_connection(pamh, bIsConsole);
+	parse_ssh_connection(pamh, bIsConsole);
+
+	const char *ssh_connection = pam_getenv(pamh,"SSH_CONNECTION");
+	if (ssh_connection == NULL) {
+
+		if (tty && strstr(tty, "ssh")) {
+				info = get_ssh_session_info(pamh);
+		} else if (tty && strstr(tty, "pts")) {
+				info = get_su_session_info(pamh);
+		}
+		snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_CLIENT_IP, info->remote_host);
+		pam_putenv(pamh, sDataEnv_var);
+
+		snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_PORT2, get_ssh_listening_port());
+		pam_putenv(pamh, sDataEnv_var);
+	}
 
 	return PAM_SUCCESS;
 }
@@ -1966,35 +1922,27 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh, int flags,
 									int argc, const char **argv)
 {
-
 	(void)argc;
 	(void)argv;
 	(void)flags;
 
-	char agt_auth_Number[4] = {
-		0,
-	};
-	char pamCertDtlCode[4] = {
-		0,
-	};
-	char agtConnFormTpCode[4] = {
-		0,
-	};
+	char agt_auth_Number[4] = {0,}, pamCertDtlCode[4] = {0,}, agtConnFormTpCode[4] = {0,};
 	bool isConsole = NULL;
 	SessionInfo *info = NULL;
 	struct _archive_log *logitem;
-	struct st_pam_conf pam_conf;
+	struct st_pam_conf 	pam_conf;
 
-	const char *service = get_pam_item_str(pamh, PAM_SERVICE);
-	const char *tty = get_pam_item_str(pamh, PAM_TTY);
-	const char *rhost = get_pam_item_str(pamh, PAM_RHOST);
-	const char *user = get_pam_item_str(pamh, PAM_USER);
+	const char *service = 	get_pam_item_str(pamh, PAM_SERVICE);
+	const char *tty = 		get_pam_item_str(pamh, PAM_TTY);
+	const char *rhost = 	get_pam_item_str(pamh, PAM_RHOST);
+	const char *user = 		get_pam_item_str(pamh, PAM_USER);
 
 	struct _msg_header_ header = {
 
-		.iMsgTotalSize = 0,
-		.iMsgType = 0,
-		.iMsgCode = 0};
+		.iMsgTotalSize 	= 0,
+		.iMsgType 		= 0,
+		.iMsgCode 		= 0
+	};
 
 	/*
 				// get pam config
@@ -2019,21 +1967,18 @@ PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh, int flags,
 
 	int pri_no, action, logging;
 	char *agt_auth_no;
-	const char *agent_id = get_value_as_string(getPamRuleFilePath(sDataHomeDir), "agentId");
-	const char *sessionkey = pam_getenv(pamh, ENV_HIWARE_SESSIONKEY);
+	const char *agent_id 	= get_value_as_string(getPamRuleFilePath(sDataHomeDir), "agentId");
+	const char *sessionkey 	= pam_getenv(pamh, ENV_HIWARE_SESSIONKEY);
 
 	g_nDataSshPort = get_ssh_listening_port();
-
-	sprintf((char *)header.sAgentId, agent_id ? agent_id : "");
-	sprintf((char *)header.iMsgVer, "%s", ND_PAM_VERSION);
 
 	if (sessionkey == NULL)
 	{
 		sessionkey = getenv(ENV_HIWARE_SESSIONKEY);
 	}
 
-	snprintf(pamCertDtlCode, sizeof(pamCertDtlCode), "%s", PAM_LOGOUT);
-	snprintf(agtConnFormTpCode, sizeof(agtConnFormTpCode), "%s", PAM_CONN_BYPASS);
+	snprintf(pamCertDtlCode, 	sizeof(pamCertDtlCode), 	"%s", PAM_LOGOUT);
+	snprintf(agtConnFormTpCode, sizeof(agtConnFormTpCode), 	"%s", PAM_CONN_BYPASS);
 
 	if (tty && strstr(tty, "ssh"))
 	{
