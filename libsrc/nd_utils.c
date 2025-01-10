@@ -815,16 +815,16 @@ char *create_sessionlogdata_using_JSON(const char * agtauth_no, const char * agt
 {
 	//int authsvr_port = 0, retval = 0;
 
-        /*
-                // create json object
-        */
-        json_object *jobj       = json_object_new_object();
-        json_object *jbody      = json_object_new_object();
-        json_object *jitems     = json_object_new_object();
+	/*
+			// create json object
+	*/
+	json_object *jobj       = json_object_new_object();
+	json_object *jbody      = json_object_new_object();
+	json_object *jitems     = json_object_new_object();
 
-        /*
-                // add data to item object
-        */
+	/*
+			// add data to item object
+	*/
 	if (agtauth_no)
                 json_object_object_add(jitems, "agtauth_no", json_object_new_string(agtauth_no));
         else
@@ -868,30 +868,30 @@ char *create_sessionlogdata_using_JSON(const char * agtauth_no, const char * agt
 	else
 		json_object_object_add(jitems, "session_key", json_object_new_string(""));
 
-        /*
-                // add items to body object
-        */
-        json_object_object_add(jbody, "name", json_object_new_string("session_log"));
-        json_object_object_add(jbody, "items", jitems);
+	/*
+			// add items to body object
+	*/
+	json_object_object_add(jbody, "name", json_object_new_string("session_log"));
+	json_object_object_add(jbody, "items", jitems);
 
-        /*
-                // add body to finally JSON object
-        */
-        json_object_object_add(jobj, "body", jbody);
+	/*
+			// add body to finally JSON object
+	*/
+	json_object_object_add(jobj, "body", jbody);
 
-        /*
-                // convert to JSON string
-        */
-        const char *json_string = json_object_to_json_string(jobj);
+	/*
+			// convert to JSON string
+	*/
+	const char *json_string = json_object_to_json_string(jobj);
 
-        /*
-                // copy and return JSON string
-        */
-        char *result = strdup(json_string);
+	/*
+			// copy and return JSON string
+	*/
+	char *result = strdup(json_string);
 
-        json_object_put(jobj);
+	json_object_put(jobj);
 
-        return result;
+	return result;
 
 }
 
@@ -902,78 +902,78 @@ char *create_sulogdata_using_JSON(const char * agtauth_no, const char * agtId,  
 {
 	//int authsvr_port = 0, retval = 0;
 
-        /*
-                // create json object
-        */
-        json_object *jobj       = json_object_new_object();
-        json_object *jbody      = json_object_new_object();
-        json_object *jitems     = json_object_new_object();
+	/*
+			// create json object
+	*/
+	json_object *jobj       = json_object_new_object();
+	json_object *jbody      = json_object_new_object();
+	json_object *jitems     = json_object_new_object();
 
-        /*
-                // add data to item object
-        */
+	/*
+			// add data to item object
+	*/
 	if (agtauth_no)
                 json_object_object_add(jitems, "agtauth_no", json_object_new_string(agtauth_no));
-        else
-                json_object_object_add(jitems, "agtauth_no", json_object_new_string(""));
+	else
+			json_object_object_add(jitems, "agtauth_no", json_object_new_string(""));
 
-        if (agtId)
-                json_object_object_add(jitems, "agent_id", json_object_new_string(agtId));
-        else
-                json_object_object_add(jitems, "agent_id", json_object_new_string(""));
+	if (agtId)
+			json_object_object_add(jitems, "agent_id", json_object_new_string(agtId));
+	else
+			json_object_object_add(jitems, "agent_id", json_object_new_string(""));
 
-        if (account)
-                json_object_object_add(jitems, "account", json_object_new_string(account));
-        else
-                json_object_object_add(jitems, "account", json_object_new_string(""));
+	if (account)
+			json_object_object_add(jitems, "account", json_object_new_string(account));
+	else
+			json_object_object_add(jitems, "account", json_object_new_string(""));
 
-        if (switch_account)
-                json_object_object_add(jitems, "switch_account", json_object_new_string(switch_account));
-        else
-                json_object_object_add(jitems, "switch_account", json_object_new_string(""));
+	if (switch_account)
+			json_object_object_add(jitems, "switch_account", json_object_new_string(switch_account));
+	else
+			json_object_object_add(jitems, "switch_account", json_object_new_string(""));
 
-        if (su_command)
-                json_object_object_add(jitems, "su_command", json_object_new_string(su_command));
-        else
-                json_object_object_add(jitems, "su_command", json_object_new_string(""));
+	if (su_command)
+			json_object_object_add(jitems, "su_command", json_object_new_string(su_command));
+	else
+			json_object_object_add(jitems, "su_command", json_object_new_string(""));
 
 
-        if (client_ip)
-                json_object_object_add(jitems, "client_ip", json_object_new_string(client_ip));
-        else
-                json_object_object_add(jitems, "client_ip", json_object_new_string(""));
+	if (client_ip)
+			json_object_object_add(jitems, "client_ip", json_object_new_string(client_ip));
+	else
+			json_object_object_add(jitems, "client_ip", json_object_new_string(""));
 
-        json_object_object_add(jitems, "time", json_object_new_int64(time));
+	json_object_object_add(jitems, "time", json_object_new_int64(time));
 
-        if (session_key)
-                json_object_object_add(jitems, "session_key", json_object_new_string(session_key));
-        else
-                json_object_object_add(jitems, "session_key", json_object_new_string(""));
+	if (session_key)
+			json_object_object_add(jitems, "session_key", json_object_new_string(session_key));
+	else
+			json_object_object_add(jitems, "session_key", json_object_new_string(""));
 
-        /*
-                // add items to body object
-        */
-        json_object_object_add(jbody, "name", json_object_new_string("su_log"));
-        json_object_object_add(jbody, "items", jitems);
+	/*
+			// add items to body object
+	*/
+	json_object_object_add(jbody, "name", json_object_new_string("su_log"));
+	json_object_object_add(jbody, "items", jitems);
 
-        /*
-                // add body to finally JSON object
-        */
-        json_object_object_add(jobj, "body", jbody);
+	/*
+			// add body to finally JSON object
+	*/
+	json_object_object_add(jobj, "body", jbody);
 
-        /*
-                // convert to JSON string
-        */
-        const char *json_string = json_object_to_json_string(jobj);
+	/*
+			// convert to JSON string
+	*/
+	const char *json_string = json_object_to_json_string(jobj);
 
-        /*
-                // copy and return JSON string
-        */
-        char *result = strdup(json_string);
+	/*
+			// copy and return JSON string
+	*/
+	char *result = strdup(json_string);
 
-        json_object_put(jobj);
+	json_object_put(jobj);
 
-        return result;
+	return result;
 
 }
 
@@ -1042,37 +1042,31 @@ int sending_data_to_logger(char * sAgentId, unsigned char iType, unsigned char i
 int initializeAuthVariables(void)
 {
 	char * auth_server_ip   = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);
-        char * auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
+    char * auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
 	char * auth_use_ssl	= get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_AUTHSVR_USESSL);
-
-	//char * system_id	= get_value_from_inf(g_sConfFilePath, SECTION_NM_SYSLOGIN_CONF, PAM_CONF_KEY_SYSTEM_ID);
-	//char * system_pw        = get_value_from_inf(g_sConfFilePath, SECTION_NM_SYSLOGIN_CONF, PAM_CONF_KEY_SYSTEM_PW);
 
 	MakeRdmURL(auth_server_ip, atoi (auth_server_port), g_sDataRandomUrl, sizeof (g_sDataRandomUrl), (strcmp (auth_use_ssl,CONF_VALUE_YES) == 0)?1:0);
 	MakeLoginURL(auth_server_ip, atoi (auth_server_port), g_sDataSystemLoginUrl, sizeof (g_sDataSystemLoginUrl), (strcmp(auth_use_ssl, CONF_VALUE_YES) == 0)?1:0);
 
-	//g_sDataSysID = strdup (system_id);
-	//g_sDataSysPW = strdup (system_pw);
+	nd_log (LOG_LEVEL_INFO, "====================================================================");
+	nd_log (LOG_LEVEL_INFO, "[API SERVER information read from the configuration file]");
+	nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
+	nd_log (LOG_LEVEL_INFO, " * setting file paht : %s", g_sConfFilePath);
+	nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
+	nd_log (LOG_LEVEL_INFO, "\t- <api server> ip address   :%s", auth_server_ip ? auth_server_ip : "Could not read");
+	nd_log (LOG_LEVEL_INFO, "\t- <api server> ip port      :%s", auth_server_port ? auth_server_port : "Could not read");
+	nd_log (LOG_LEVEL_INFO, "\t- <api server> ssl use flag :%s", auth_use_ssl ? auth_use_ssl : "Could not read");
 
-        nd_log (LOG_LEVEL_INFO, "====================================================================");
-        nd_log (LOG_LEVEL_INFO, "[API SERVER information read from the configuration file]");
-        nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
-        nd_log (LOG_LEVEL_INFO, " * setting file paht : %s", g_sConfFilePath);
-        nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
-        nd_log (LOG_LEVEL_INFO, "\t- <api server> ip address   :%s", auth_server_ip ? auth_server_ip : "Could not read");
-        nd_log (LOG_LEVEL_INFO, "\t- <api server> ip port      :%s", auth_server_port ? auth_server_port : "Could not read");
-        nd_log (LOG_LEVEL_INFO, "\t- <api server> ssl use flag :%s", auth_use_ssl ? auth_use_ssl : "Could not read");
+	nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
+	nd_log (LOG_LEVEL_INFO, "[API SERVER ENDPOINT information]");
+	nd_log (LOG_LEVEL_INFO, "\t- Request Random url        :%s", g_sDataRandomUrl);
+	nd_log (LOG_LEVEL_INFO, "\t- request SystemLogin url   :%s", g_sDataSystemLoginUrl);
+	nd_log (LOG_LEVEL_INFO, "====================================================================");
 
-        nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
-        nd_log (LOG_LEVEL_INFO, "[API SERVER ENDPOINT information]");
-        nd_log (LOG_LEVEL_INFO, "\t- Request Random url        :%s", g_sDataRandomUrl);
-        nd_log (LOG_LEVEL_INFO, "\t- request SystemLogin url   :%s", g_sDataSystemLoginUrl);
-        nd_log (LOG_LEVEL_INFO, "====================================================================");
-
-        if (!auth_server_ip)            nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server ip address.");
-        if (!auth_server_port)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server port.");
-        if (strlen(g_sDataRandomUrl) <= 0)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for random number request.");
-        if (strlen(g_sDataSystemLoginUrl) <= 0)     nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for system login request.");
+	if (!auth_server_ip)            nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server ip address.");
+	if (!auth_server_port)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server port.");
+	if (strlen(g_sDataRandomUrl) <= 0)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for random number request.");
+	if (strlen(g_sDataSystemLoginUrl) <= 0)     nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for system login request.");
         
 	return 0;
 }
@@ -1458,24 +1452,22 @@ void parse_ssh_connection(pam_handle_t *pamh, bool isConsole) 	{
 	}
 
 	snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_CLIENT_IP,client_ip);
-        pam_putenv(pamh, sDataEnv_var);
+    pam_putenv(pamh, sDataEnv_var);
 	
 	memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
 
 	snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_CLIENT_PORT,client_port);
-        pam_putenv(pamh, sDataEnv_var);
+    pam_putenv(pamh, sDataEnv_var);
 
-        memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
+    memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
 
 	snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_IP,server_ip);
-        pam_putenv(pamh, sDataEnv_var);
+    pam_putenv(pamh, sDataEnv_var);
 
-        memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
+    memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
 
-        snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_PORT,server_port);
-        pam_putenv(pamh, sDataEnv_var);
-
-//	pam_set_data(pamh, PAM_BAK_SSH_SERVER_IP, strdup(server_ip), free);
+    snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_PORT,server_port);
+    pam_putenv(pamh, sDataEnv_var);
 
 }
 
