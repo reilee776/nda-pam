@@ -276,7 +276,7 @@ int is_time_in_range(const char *start, const char *end, time_t current_time);
 
 int is_wday_time_valid(const struct json_object *wday_list, int current_wday, time_t current_time);
 
-int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday);
+int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday, char **agtAuthNo,int *action, int *logging);
 
 int validate_json_sampolicy_without_date(const char *json_file, const char *ip, const char *account, char **agtAuthNo,int *action, int *logging);
 

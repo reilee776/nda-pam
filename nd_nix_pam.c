@@ -38,6 +38,8 @@ typedef int (*PEM_WRITE_BIO_PRIV_FUNC)(BIO *, RSA *);
 
 #define RSA_KEY_BITS 2048
 
+#define _SUPP_DATE_
+
 int g_nFailCnt = 0;
 // void nd_pam_log(int level, char* filename, int line, const char *fmt, ...);
 
@@ -827,11 +829,14 @@ PolicyValidationResult validate_access_policies(const char *rulePath, const Sess
 	int current_wday = tm_info->tm_wday == 0 ? 7 : tm_info->tm_wday; // Adjust Sunday to 7
 
 	if (is_pam_user_ndshell(pamh) &&
-		validate_json_sampolicy(getPamRuleFilePath(configPath),
+		validate_json_sampolicy(getPamRuleFilePath(rulePath),
 								userInfo->remote_host,
 								userInfo->current_user,
 								current_time,
-								current_wday) == 1)
+								current_wday,
+								&result.sam_agtAuthNo,
+								&result.sam_action,
+								&result.sam_logging) == 1)
 	{
 		result.samPolicyValid = true;
 	}
@@ -1759,8 +1764,20 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 			bool isNdShell = is_pam_user_ndshell(pamh);
 			if (isNdShell == true)
 			{
+#ifdef _SUPP_DATE_
+				time_t current_time = time(NULL);
+        		struct tm *tm_info = localtime(&current_time);
+        		int current_wday = tm_info->tm_wday == 0 ? 7 : tm_info->tm_wday; // Adjust Sunday to 7
+
+				if (validate_json_sampolicy(getPamRuleFilePath(sDataHomeDir), info->remote_host, info->target_user, 
+														current_time,
+                                        				current_wday,
+														&ndshell_agtAuthNo,
+														&sam_action, &sam_logging) == 1)
+#else
 				if (validate_json_sampolicy_without_date(getPamRuleFilePath(sDataHomeDir), info->remote_host, info->target_user, &ndshell_agtAuthNo,
 														 &sam_action, &sam_logging) == 1)
+#endif //_SUPP_DATE_														 
 				{
 					snprintf(agtNo, 			sizeof(agtNo), 				"%s", agent_id);
 					snprintf(agtConnFormTpCode, sizeof(agtConnFormTpCode), 	"%s", PAM_CONN_BYPASS);
@@ -1866,6 +1883,8 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags,
 PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 								   int argc, const char **argv)
 {
+	SessionInfo *info = NULL;
+	char    sDataEnv_var[MAX_ENV_STR_LEN];
 	bool bIsConsole = false;
 	struct st_pam_conf pam_conf;
 	const char *sDataHomeDir = pam_getenv(pamh, ENV_HIWARE_HOME);
