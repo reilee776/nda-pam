@@ -9,9 +9,13 @@ BUILD_OUTPUT_DIR="/output" # 빌드 결과 디렉토리
 GIT_BRANCH="main"          # Git 브랜치 이름
 GIT_COMMIT_MESSAGE="Update: PAM module build results"
 
+# OS 이름 및 버전 가져오기
+OS_NAME=$(uname -s)
+OS_VERSION=$(uname -r)
+
 # 현재 날짜와 시간을 기준으로 경로 생성
 TIMESTAMP=$(date +"%Y-%m-%d-%H-%M-%S")
-BUILD_TIMESTAMP_DIR="$BUILD_OUTPUT_DIR/$TIMESTAMP"
+BUILD_TIMESTAMP_DIR="$BUILD_OUTPUT_DIR/${OS_NAME}_${OS_VERSION}_$TIMESTAMP"
 
 # 빌드 실행
 echo "Starting build process..."
@@ -19,7 +23,7 @@ cd $REPO_DIR
 make clean
 make
 
-# 빌드 결과를 타임스탬프 디렉토리에 복사
+# 빌드 결과를 OS 및 타임스탬프 디렉토리에 복사
 echo "Copying build results to $BUILD_TIMESTAMP_DIR..."
 mkdir -p $BUILD_TIMESTAMP_DIR
 cp -r *.so $BUILD_TIMESTAMP_DIR || true
@@ -29,8 +33,8 @@ echo "Preparing to update Git repository..."
 cd $REPO_DIR
 
 # 빌드 결과를 Git 리포지토리로 이동
-mkdir -p "$REPO_DIR/build_results/$TIMESTAMP"
-cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/$TIMESTAMP"
+mkdir -p "$REPO_DIR/build_results/${OS_NAME}_${OS_VERSION}_$TIMESTAMP"
+cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_NAME}_${OS_VERSION}_$TIMESTAMP"
 
 # Git 설정 (필요 시 사용자 정보 설정)
 git config --global user.name "Your Name"
@@ -45,3 +49,4 @@ echo "Pushing changes to Git repository..."
 git push origin $GIT_BRANCH
 
 echo "Build and Git update completed successfully!"
+
