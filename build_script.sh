@@ -10,12 +10,15 @@ GIT_BRANCH="main"          # Git 브랜치 이름
 GIT_COMMIT_MESSAGE="Update: PAM module build results"
 
 # OS 이름 및 버전 가져오기
-OS_NAME=$(uname -s)
-OS_VERSION=$(uname -r)
+OS_NAME=$(cat /etc/os-release | grep ^ID= | cut -d'=' -f2 | tr -d '"')
+OS_VERSION=$(cat /etc/os-release | grep ^VERSION_ID= | cut -d'=' -f2 | tr -d '"')
+
+# OS 이름과 버전을 합쳐서 사용자 친화적 이름 생성
+OS_FRIENDLY_NAME="${OS_NAME}${OS_VERSION}"
 
 # 현재 날짜와 시간을 기준으로 경로 생성
 TIMESTAMP=$(date +"%Y-%m-%d-%H-%M-%S")
-BUILD_TIMESTAMP_DIR="$BUILD_OUTPUT_DIR/${OS_NAME}_${OS_VERSION}_$TIMESTAMP"
+BUILD_TIMESTAMP_DIR="$BUILD_OUTPUT_DIR/${OS_FRIENDLY_NAME}_$TIMESTAMP"
 
 # 빌드 실행
 echo "Starting build process..."
@@ -33,8 +36,8 @@ echo "Preparing to update Git repository..."
 cd $REPO_DIR
 
 # 빌드 결과를 Git 리포지토리로 이동
-mkdir -p "$REPO_DIR/build_results/${OS_NAME}_${OS_VERSION}_$TIMESTAMP"
-cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_NAME}_${OS_VERSION}_$TIMESTAMP"
+mkdir -p "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"
+cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"
 
 # Git 설정 (필요 시 사용자 정보 설정)
 git config --global user.name "Your Name"
