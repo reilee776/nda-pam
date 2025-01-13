@@ -2,7 +2,7 @@ CC = gcc
 
 # Library and include paths
 LIB_DIR = /hiagt/lib/nda-pam/
-#CFLAGS = -fPIC -I$(LIB_DIR)/include -Wall -Wextra -g -std=c99 -D_GNU_SOURCE
+#CFLAGS = -fPIC -I$(LIB_DIR)/include -Wextra -g -std=c99 -D_GNU_SOURCE
 CFLAGS = -fPIC -I$(LIB_DIR)/include -Wextra -g -std=c99 -D_GNU_SOURCE
 LDFLAGS = -shared -fPIC -L$(LIB_DIR) -Wl,-rpath,$(LIB_DIR)
 
