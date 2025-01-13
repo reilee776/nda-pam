@@ -24,6 +24,9 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
+
+#define _GNU_SOURCE
+
 #include <netdb.h>
 
 #include <sys/ioctl.h>
@@ -812,16 +815,16 @@ char *create_sessionlogdata_using_JSON(const char * agtauth_no, const char * agt
 {
 	//int authsvr_port = 0, retval = 0;
 
-        /*
-                // create json object
-        */
-        json_object *jobj       = json_object_new_object();
-        json_object *jbody      = json_object_new_object();
-        json_object *jitems     = json_object_new_object();
+	/*
+			// create json object
+	*/
+	json_object *jobj       = json_object_new_object();
+	json_object *jbody      = json_object_new_object();
+	json_object *jitems     = json_object_new_object();
 
-        /*
-                // add data to item object
-        */
+	/*
+			// add data to item object
+	*/
 	if (agtauth_no)
                 json_object_object_add(jitems, "agtauth_no", json_object_new_string(agtauth_no));
         else
@@ -865,30 +868,30 @@ char *create_sessionlogdata_using_JSON(const char * agtauth_no, const char * agt
 	else
 		json_object_object_add(jitems, "session_key", json_object_new_string(""));
 
-        /*
-                // add items to body object
-        */
-        json_object_object_add(jbody, "name", json_object_new_string("session_log"));
-        json_object_object_add(jbody, "items", jitems);
+	/*
+			// add items to body object
+	*/
+	json_object_object_add(jbody, "name", json_object_new_string("session_log"));
+	json_object_object_add(jbody, "items", jitems);
 
-        /*
-                // add body to finally JSON object
-        */
-        json_object_object_add(jobj, "body", jbody);
+	/*
+			// add body to finally JSON object
+	*/
+	json_object_object_add(jobj, "body", jbody);
 
-        /*
-                // convert to JSON string
-        */
-        const char *json_string = json_object_to_json_string(jobj);
+	/*
+			// convert to JSON string
+	*/
+	const char *json_string = json_object_to_json_string(jobj);
 
-        /*
-                // copy and return JSON string
-        */
-        char *result = strdup(json_string);
+	/*
+			// copy and return JSON string
+	*/
+	char *result = strdup(json_string);
 
-        json_object_put(jobj);
+	json_object_put(jobj);
 
-        return result;
+	return result;
 
 }
 
@@ -899,78 +902,78 @@ char *create_sulogdata_using_JSON(const char * agtauth_no, const char * agtId,  
 {
 	//int authsvr_port = 0, retval = 0;
 
-        /*
-                // create json object
-        */
-        json_object *jobj       = json_object_new_object();
-        json_object *jbody      = json_object_new_object();
-        json_object *jitems     = json_object_new_object();
+	/*
+			// create json object
+	*/
+	json_object *jobj       = json_object_new_object();
+	json_object *jbody      = json_object_new_object();
+	json_object *jitems     = json_object_new_object();
 
-        /*
-                // add data to item object
-        */
+	/*
+			// add data to item object
+	*/
 	if (agtauth_no)
                 json_object_object_add(jitems, "agtauth_no", json_object_new_string(agtauth_no));
-        else
-                json_object_object_add(jitems, "agtauth_no", json_object_new_string(""));
+	else
+			json_object_object_add(jitems, "agtauth_no", json_object_new_string(""));
 
-        if (agtId)
-                json_object_object_add(jitems, "agent_id", json_object_new_string(agtId));
-        else
-                json_object_object_add(jitems, "agent_id", json_object_new_string(""));
+	if (agtId)
+			json_object_object_add(jitems, "agent_id", json_object_new_string(agtId));
+	else
+			json_object_object_add(jitems, "agent_id", json_object_new_string(""));
 
-        if (account)
-                json_object_object_add(jitems, "account", json_object_new_string(account));
-        else
-                json_object_object_add(jitems, "account", json_object_new_string(""));
+	if (account)
+			json_object_object_add(jitems, "account", json_object_new_string(account));
+	else
+			json_object_object_add(jitems, "account", json_object_new_string(""));
 
-        if (switch_account)
-                json_object_object_add(jitems, "switch_account", json_object_new_string(switch_account));
-        else
-                json_object_object_add(jitems, "switch_account", json_object_new_string(""));
+	if (switch_account)
+			json_object_object_add(jitems, "switch_account", json_object_new_string(switch_account));
+	else
+			json_object_object_add(jitems, "switch_account", json_object_new_string(""));
 
-        if (su_command)
-                json_object_object_add(jitems, "su_command", json_object_new_string(su_command));
-        else
-                json_object_object_add(jitems, "su_command", json_object_new_string(""));
+	if (su_command)
+			json_object_object_add(jitems, "su_command", json_object_new_string(su_command));
+	else
+			json_object_object_add(jitems, "su_command", json_object_new_string(""));
 
 
-        if (client_ip)
-                json_object_object_add(jitems, "client_ip", json_object_new_string(client_ip));
-        else
-                json_object_object_add(jitems, "client_ip", json_object_new_string(""));
+	if (client_ip)
+			json_object_object_add(jitems, "client_ip", json_object_new_string(client_ip));
+	else
+			json_object_object_add(jitems, "client_ip", json_object_new_string(""));
 
-        json_object_object_add(jitems, "time", json_object_new_int64(time));
+	json_object_object_add(jitems, "time", json_object_new_int64(time));
 
-        if (session_key)
-                json_object_object_add(jitems, "session_key", json_object_new_string(session_key));
-        else
-                json_object_object_add(jitems, "session_key", json_object_new_string(""));
+	if (session_key)
+			json_object_object_add(jitems, "session_key", json_object_new_string(session_key));
+	else
+			json_object_object_add(jitems, "session_key", json_object_new_string(""));
 
-        /*
-                // add items to body object
-        */
-        json_object_object_add(jbody, "name", json_object_new_string("su_log"));
-        json_object_object_add(jbody, "items", jitems);
+	/*
+			// add items to body object
+	*/
+	json_object_object_add(jbody, "name", json_object_new_string("su_log"));
+	json_object_object_add(jbody, "items", jitems);
 
-        /*
-                // add body to finally JSON object
-        */
-        json_object_object_add(jobj, "body", jbody);
+	/*
+			// add body to finally JSON object
+	*/
+	json_object_object_add(jobj, "body", jbody);
 
-        /*
-                // convert to JSON string
-        */
-        const char *json_string = json_object_to_json_string(jobj);
+	/*
+			// convert to JSON string
+	*/
+	const char *json_string = json_object_to_json_string(jobj);
 
-        /*
-                // copy and return JSON string
-        */
-        char *result = strdup(json_string);
+	/*
+			// copy and return JSON string
+	*/
+	char *result = strdup(json_string);
 
-        json_object_put(jobj);
+	json_object_put(jobj);
 
-        return result;
+	return result;
 
 }
 
@@ -1039,37 +1042,31 @@ int sending_data_to_logger(char * sAgentId, unsigned char iType, unsigned char i
 int initializeAuthVariables(void)
 {
 	char * auth_server_ip   = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);
-        char * auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
+    char * auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
 	char * auth_use_ssl	= get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_AUTHSVR_USESSL);
-
-	//char * system_id	= get_value_from_inf(g_sConfFilePath, SECTION_NM_SYSLOGIN_CONF, PAM_CONF_KEY_SYSTEM_ID);
-	//char * system_pw        = get_value_from_inf(g_sConfFilePath, SECTION_NM_SYSLOGIN_CONF, PAM_CONF_KEY_SYSTEM_PW);
 
 	MakeRdmURL(auth_server_ip, atoi (auth_server_port), g_sDataRandomUrl, sizeof (g_sDataRandomUrl), (strcmp (auth_use_ssl,CONF_VALUE_YES) == 0)?1:0);
 	MakeLoginURL(auth_server_ip, atoi (auth_server_port), g_sDataSystemLoginUrl, sizeof (g_sDataSystemLoginUrl), (strcmp(auth_use_ssl, CONF_VALUE_YES) == 0)?1:0);
 
-	//g_sDataSysID = strdup (system_id);
-	//g_sDataSysPW = strdup (system_pw);
+	nd_log (LOG_LEVEL_INFO, "====================================================================");
+	nd_log (LOG_LEVEL_INFO, "[API SERVER information read from the configuration file]");
+	nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
+	nd_log (LOG_LEVEL_INFO, " * setting file paht : %s", g_sConfFilePath);
+	nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
+	nd_log (LOG_LEVEL_INFO, "\t- <api server> ip address   :%s", auth_server_ip ? auth_server_ip : "Could not read");
+	nd_log (LOG_LEVEL_INFO, "\t- <api server> ip port      :%s", auth_server_port ? auth_server_port : "Could not read");
+	nd_log (LOG_LEVEL_INFO, "\t- <api server> ssl use flag :%s", auth_use_ssl ? auth_use_ssl : "Could not read");
 
-        nd_log (LOG_LEVEL_INFO, "====================================================================");
-        nd_log (LOG_LEVEL_INFO, "[API SERVER information read from the configuration file]");
-        nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
-        nd_log (LOG_LEVEL_INFO, " * setting file paht : %s", g_sConfFilePath);
-        nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
-        nd_log (LOG_LEVEL_INFO, "\t- <api server> ip address   :%s", auth_server_ip ? auth_server_ip : "Could not read");
-        nd_log (LOG_LEVEL_INFO, "\t- <api server> ip port      :%s", auth_server_port ? auth_server_port : "Could not read");
-        nd_log (LOG_LEVEL_INFO, "\t- <api server> ssl use flag :%s", auth_use_ssl ? auth_use_ssl : "Could not read");
+	nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
+	nd_log (LOG_LEVEL_INFO, "[API SERVER ENDPOINT information]");
+	nd_log (LOG_LEVEL_INFO, "\t- Request Random url        :%s", g_sDataRandomUrl);
+	nd_log (LOG_LEVEL_INFO, "\t- request SystemLogin url   :%s", g_sDataSystemLoginUrl);
+	nd_log (LOG_LEVEL_INFO, "====================================================================");
 
-        nd_log (LOG_LEVEL_INFO, "--------------------------------------------------------------------");
-        nd_log (LOG_LEVEL_INFO, "[API SERVER ENDPOINT information]");
-        nd_log (LOG_LEVEL_INFO, "\t- Request Random url        :%s", g_sDataRandomUrl);
-        nd_log (LOG_LEVEL_INFO, "\t- request SystemLogin url   :%s", g_sDataSystemLoginUrl);
-        nd_log (LOG_LEVEL_INFO, "====================================================================");
-
-        if (!auth_server_ip)            nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server ip address.");
-        if (!auth_server_port)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server port.");
-        if (strlen(g_sDataRandomUrl) <= 0)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for random number request.");
-        if (strlen(g_sDataSystemLoginUrl) <= 0)     nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for system login request.");
+	if (!auth_server_ip)            nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server ip address.");
+	if (!auth_server_port)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get api server port.");
+	if (strlen(g_sDataRandomUrl) <= 0)          nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for random number request.");
+	if (strlen(g_sDataSystemLoginUrl) <= 0)     nd_log (LOG_LEVEL_ERR, "[PREFIX-ERR CODE] Failed to get url for system login request.");
         
 	return 0;
 }
@@ -1250,8 +1247,8 @@ PamPolicy parsePamPolicy(const char *filename) {
 		pamPolicy.rules[i].priNo = json_object_get_int(json_object_object_get(rule, "priNo"));		
 		pamPolicy.rules[i].agtAuthNo = json_object_get_string(json_object_object_get(rule, "agtAuthNo"));
 
-		pamPolicy.rules[i].action = json_object_get_int(json_object_object_get(rule, "action"));
-		pamPolicy.rules[i].logging = json_object_get_int(json_object_object_get(rule, "logging"));
+		pamPolicy.rules[i].action = json_object_get_int(json_object_object_get(rule, "pmsShutYn"));
+		pamPolicy.rules[i].logging = json_object_get_int(json_object_object_get(rule, "logUseYn"));
 
 		json_object_object_get_ex(rule, "ipList", &ipList);
 		pamPolicy.rules[i].ipCount = json_object_array_length(ipList);
@@ -1260,7 +1257,7 @@ PamPolicy parsePamPolicy(const char *filename) {
 		    pamPolicy.rules[i].ipList[j] = strdup(json_object_get_string(json_object_array_get_idx(ipList, j)));
 		}
 
-		json_object_object_get_ex(rule, "account", &account);
+		json_object_object_get_ex(rule, "acctIdList", &account);
 		pamPolicy.rules[i].accountCount = json_object_array_length(account);
 		pamPolicy.rules[i].account = malloc(pamPolicy.rules[i].accountCount * sizeof(char *));
 		for (j = 0; j < (size_t) pamPolicy.rules[i].accountCount; j++) {
@@ -1455,24 +1452,22 @@ void parse_ssh_connection(pam_handle_t *pamh, bool isConsole) 	{
 	}
 
 	snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_CLIENT_IP,client_ip);
-        pam_putenv(pamh, sDataEnv_var);
+    pam_putenv(pamh, sDataEnv_var);
 	
 	memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
 
 	snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_CLIENT_PORT,client_port);
-        pam_putenv(pamh, sDataEnv_var);
+    pam_putenv(pamh, sDataEnv_var);
 
-        memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
+    memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
 
 	snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_IP,server_ip);
-        pam_putenv(pamh, sDataEnv_var);
+    pam_putenv(pamh, sDataEnv_var);
 
-        memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
+    memset (sDataEnv_var, 0x00, sizeof(sDataEnv_var));
 
-        snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_PORT,server_port);
-        pam_putenv(pamh, sDataEnv_var);
-
-//	pam_set_data(pamh, PAM_BAK_SSH_SERVER_IP, strdup(server_ip), free);
+    snprintf(sDataEnv_var, sizeof(sDataEnv_var), HIWARE_SSH_SERVER_PORT,server_port);
+    pam_putenv(pamh, sDataEnv_var);
 
 }
 
@@ -2217,57 +2212,57 @@ struct _archive_log* create_archive_log(
 #else //_OLD_SRC
 struct _archive_log* create_archive_log(
 	const char *svrConnStartTime,
-        const char *svrConnEndTime,
-        const char *svrConnRstTpCode,
-        const char *svrConnFailRsnCode,
-        const char *agtNo,
-        const char *agtConnFormTpCode,
-        const char *agtAuthNo,
-        const char *portNo,
-        const char *userIp,
-        const char *securStepNo,
-        const char *svrConnSessKey,
-        const char *connAcctId,
+	const char *svrConnEndTime,
+	const char *svrConnRstTpCode,
+	const char *svrConnFailRsnCode,
+	const char *agtNo,
+	const char *agtConnFormTpCode,
+	const char *agtAuthNo,
+	const char *portNo,
+	const char *userIp,
+	const char *securStepNo,
+	const char *svrConnSessKey,
+	const char *connAcctId,
 	const char *switchAcctId,
-        const char *pamAgtAuthNo,
-        const char *userNo,
-        const char *pamCertDtlCode,
+	const char *pamAgtAuthNo,
+	const char *userNo,
+	const char *pamCertDtlCode,
 	const char *pamCertDtlAuthCode,
 
-        const char *certTpCode,
-        const char *certAppTpCode,
-        const char *certSucesFailYn,
-        const char *certStepSeqNo
+	const char *certTpCode,
+	const char *certAppTpCode,
+	const char *certSucesFailYn,
+	const char *certStepSeqNo
 ) 
 {
 	struct _archive_log *log = malloc(sizeof(struct _archive_log));
-        if (!log) {
-                fprintf(stderr, "[ERR] Failed to allocate memory for archive log\n");
-                return NULL;
-        }
+	if (!log) {
+			fprintf(stderr, "[ERR] Failed to allocate memory for archive log\n");
+			return NULL;
+	}
 
 	snprintf(log->svrConnStartTime,		ND_TIME_MAX_LEN,			svrConnStartTime	?svrConnStartTime 	: "");
-        snprintf(log->svrConnEndTime,		ND_TIME_MAX_LEN,			svrConnEndTime		?svrConnEndTime 	: "");
-        snprintf(log->svrConnRstTpCode,		4,					svrConnRstTpCode	?svrConnRstTpCode 	: "");
-        snprintf(log->svrConnFailRsnCode,	4,					svrConnFailRsnCode	?svrConnFailRsnCode 	: "");
-        snprintf(log->agtNo,			16,					agtNo			?agtNo 			: "");
-        snprintf(log->agtConnFormTpCode,	4,					agtConnFormTpCode	?agtConnFormTpCode 	: "");
-        snprintf(log->agtAuthNo,		ND_AGTAUTHNO_MAX_LEN,			agtAuthNo		?agtAuthNo 		: "");
-        snprintf(log->portNo,			8,					portNo			?portNo 		: "");
-        snprintf(log->userIp,			ND_SOURCEIP_MAX_LEN,			userIp			?userIp 		: "");
-        snprintf(log->securStepNo,		ND_SECUR_STEP_NO_MAX_LEN,		securStepNo		?securStepNo 		: "");
-        snprintf(log->svrConnSessKey,		ND_UUID_LENGTH,				svrConnSessKey		?svrConnSessKey 	: "");
-        snprintf(log->connAcctId,		ND_SYSACCOUNT_MAX_LEN,			connAcctId		?connAcctId 		: "");
+	snprintf(log->svrConnEndTime,		ND_TIME_MAX_LEN,			svrConnEndTime		?svrConnEndTime 	: "");
+	snprintf(log->svrConnRstTpCode,		4,					svrConnRstTpCode	?svrConnRstTpCode 	: "");
+	snprintf(log->svrConnFailRsnCode,	4,					svrConnFailRsnCode	?svrConnFailRsnCode 	: "");
+	snprintf(log->agtNo,			16,					agtNo			?agtNo 			: "");
+	snprintf(log->agtConnFormTpCode,	4,					agtConnFormTpCode	?agtConnFormTpCode 	: "");
+	snprintf(log->agtAuthNo,		ND_AGTAUTHNO_MAX_LEN,			agtAuthNo		?agtAuthNo 		: "");
+	snprintf(log->portNo,			8,					portNo			?portNo 		: "");
+	snprintf(log->userIp,			ND_SOURCEIP_MAX_LEN,			userIp			?userIp 		: "");
+	snprintf(log->securStepNo,		ND_SECUR_STEP_NO_MAX_LEN,		securStepNo		?securStepNo 		: "");
+	snprintf(log->svrConnSessKey,		ND_UUID_LENGTH,				svrConnSessKey		?svrConnSessKey 	: "");
+	snprintf(log->connAcctId,		ND_SYSACCOUNT_MAX_LEN,			connAcctId		?connAcctId 		: "");
 	snprintf(log->switchAcctId,		ND_SYSACCOUNT_MAX_LEN,			switchAcctId		?switchAcctId		: "");
-        snprintf(log->pamAgtAuthNo,		ND_AGTAUTHNO_MAX_LEN,			pamAgtAuthNo		?pamAgtAuthNo 		: "");
-        snprintf(log->userNo,			18,					userNo			?userNo 		: "");
-        snprintf(log->pamCertDtlCode,		4,					pamCertDtlCode		?pamCertDtlCode 	: "");
+	snprintf(log->pamAgtAuthNo,		ND_AGTAUTHNO_MAX_LEN,			pamAgtAuthNo		?pamAgtAuthNo 		: "");
+	snprintf(log->userNo,			18,					userNo			?userNo 		: "");
+	snprintf(log->pamCertDtlCode,		4,					pamCertDtlCode		?pamCertDtlCode 	: "");
 	snprintf(log->pamCertDtlAuthCode,	4, 					pamCertDtlAuthCode	?pamCertDtlAuthCode	: "");
 
-        snprintf(log->certTpCode,		ND_CERT_TP_CODE_MAX_LEN,		certTpCode		?certTpCode 		: "");
-        snprintf(log->certAppTpCode,		ND_CERT_APP_TP_CODE_MAX_LEN,		certAppTpCode		?certAppTpCode 		: "");
-        snprintf(log->certSucesFailYn,		ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN,	certSucesFailYn		?certSucesFailYn 	: "");
-        snprintf(log->certStepSeqNo,		ND_CERT_STEP_SEQ_NO_MAX_LEN,		certStepSeqNo		?certStepSeqNo 		: "");
+	snprintf(log->certTpCode,		ND_CERT_TP_CODE_MAX_LEN,		certTpCode		?certTpCode 		: "");
+	snprintf(log->certAppTpCode,		ND_CERT_APP_TP_CODE_MAX_LEN,		certAppTpCode		?certAppTpCode 		: "");
+	snprintf(log->certSucesFailYn,		ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN,	certSucesFailYn		?certSucesFailYn 	: "");
+	snprintf(log->certStepSeqNo,		ND_CERT_STEP_SEQ_NO_MAX_LEN,		certStepSeqNo		?certStepSeqNo 		: "");
 
 
 
@@ -2367,11 +2362,11 @@ int is_wday_time_valid(const struct json_object *wday_list, int current_wday, ti
 
 	for (int i = 0; i < array_len; i++) {
 		struct json_object *wday_obj = json_object_array_get_idx(wday_list, i);
-		int wday = json_object_get_int(json_object_object_get(wday_obj, "wday"));
+		int wday = json_object_get_int(json_object_object_get(wday_obj, "wdayCode"));
 
 		if (wday == current_wday) {
-			const char *start = json_object_get_string(json_object_object_get(wday_obj, "start"));
-			const char *end = json_object_get_string(json_object_object_get(wday_obj, "end"));
+			const char *start = json_object_get_string(json_object_object_get(wday_obj, "startHhmm"));
+			const char *end = json_object_get_string(json_object_object_get(wday_obj, "endHhmm"));
 
 			struct tm tm_start = {0}, tm_end = {0};
 			time_t time_start, time_end;
@@ -2382,16 +2377,16 @@ int is_wday_time_valid(const struct json_object *wday_list, int current_wday, ti
 			}
 
 			// Ensure the year, month, and day match the current time
-			tm_start.tm_year = tm_current->tm_year;
-			tm_start.tm_mon = tm_current->tm_mon;
-			tm_start.tm_mday = tm_current->tm_mday;
+			tm_start.tm_year 	= tm_current->tm_year;
+			tm_start.tm_mon 	= tm_current->tm_mon;
+			tm_start.tm_mday 	= tm_current->tm_mday;
 
-			tm_end.tm_year = tm_current->tm_year;
-			tm_end.tm_mon = tm_current->tm_mon;
-			tm_end.tm_mday = tm_current->tm_mday;
+			tm_end.tm_year 		= tm_current->tm_year;
+			tm_end.tm_mon 		= tm_current->tm_mon;
+			tm_end.tm_mday 		= tm_current->tm_mday;
 
-			time_start = mktime(&tm_start);
-			time_end = mktime(&tm_end);
+			time_start 	= mktime(&tm_start);
+			time_end 	= mktime(&tm_end);
 
 			if (time_start == -1 || time_end == -1) {
 				fprintf(stderr, "Error converting time\n");
@@ -2420,7 +2415,7 @@ int is_wday_time_valid(const struct json_object *wday_list, int current_wday, ti
 /*
 	//
 */
-int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday) {
+int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday , char **agtAuthNo,int *action, int *logging) {
 
 	FILE *file = fopen(json_file, "r");
 	if (!file) {
@@ -2452,11 +2447,11 @@ int validate_json_sampolicy(const char *json_file, const char *ip, const char *a
 	int rule_len = json_object_array_length(rule_list);
 
 	for (int i = 0; i < rule_len; i++) {
-		struct json_object *rule = json_object_array_get_idx(rule_list, i);
-		struct json_object *ip_list = json_object_object_get(rule, "ipList");
-		struct json_object *account_list = json_object_object_get(rule, "account");
-		struct json_object *access_date = json_object_object_get(rule, "accessDate");
-		struct json_object *wday_list = json_object_object_get(rule, "wdayList");
+		struct json_object *rule 		= json_object_array_get_idx(rule_list, i);
+		struct json_object *ip_list 	= json_object_object_get(rule, "ipList");
+		struct json_object *account_list= json_object_object_get(rule, "acctIdList");
+		struct json_object *access_date = json_object_object_get(rule, "pmsTerm");
+		struct json_object *wday_list 	= json_object_object_get(rule, "wdayList");
 
 		int ip_match = 0;
 		int ip_len = json_object_array_length(ip_list);
@@ -2474,14 +2469,16 @@ int validate_json_sampolicy(const char *json_file, const char *ip, const char *a
 
 		if (!is_account_in_list(account, account_list)) continue;
 
-		const char *start_date = json_object_get_string(json_object_object_get(access_date, "start"));
-		const char *end_date = json_object_get_string(json_object_object_get(access_date, "end"));
+		const char *start_date = 	json_object_get_string(json_object_object_get(access_date, "pmsTermStartDttm"));
+		const char *end_date = 		json_object_get_string(json_object_object_get(access_date, "pmsTermEndDttm"));
 
 		if (!is_time_in_range(start_date, end_date, current_time)) continue;
 
 		if (!is_wday_time_valid(wday_list, current_wday, current_time)) continue;
 
-		//*agt_auth_no = strdup(json_object_get_string(json_object_object_get(rule, "agtAuthNo")));
+		*agtAuthNo      = strdup(json_object_get_string(json_object_object_get(rule, "agtAuthNo")));
+		*action         = json_object_get_int(json_object_object_get(rule, "action"));
+		*logging        = json_object_get_int(json_object_object_get(rule, "logging"));
 		
 		json_object_put(parsed_json);
 		return 1;
@@ -2497,80 +2494,98 @@ int validate_json_sampolicy(const char *json_file, const char *ip, const char *a
 */
 int validate_json_sampolicy_without_date(const char *json_file, const char *ip, const char *account, char **agtAuthNo,int *action, int *logging ) {
 
-        FILE *file = fopen(json_file, "r");
-        if (!file) {
-                return 0;
-        }
+	FILE *file = fopen(json_file, "r");
+	if (!file) {
+			return 0;
+	}
 
 	int retval = 0;
 
-        fseek(file, 0, SEEK_END);
-        size_t length = ftell(file);
-        fseek(file, 0, SEEK_SET);
+	fseek(file, 0, SEEK_END);
+	size_t length = ftell(file);
+	fseek(file, 0, SEEK_SET);
 
-        char *data = malloc(length + 1);
-        fread(data, 1, length, file);
-        fclose(file);
-        data[length] = '\0';
+	char *data = malloc(length + 1);
+	fread(data, 1, length, file);
+	fclose(file);
+	data[length] = '\0';
 
-        struct json_object *parsed_json = json_tokener_parse(data);
-        free(data);
-        if (!parsed_json) {
-                return 0;
-        }
+	struct json_object *parsed_json = json_tokener_parse(data);
+	free(data);
+	if (!parsed_json) {
+			return 0;
+	}
 
-        struct json_object *sam_policy;
-        if (!json_object_object_get_ex(parsed_json, "samPolicy", &sam_policy)) {
-                json_object_put(parsed_json);
-                return 0;
-        }
+	struct json_object *sam_policy;
+	if (!json_object_object_get_ex(parsed_json, "samPolicy", &sam_policy)) {
+			json_object_put(parsed_json);
+			return 0;
+	}
 
-        struct json_object *rule_list = json_object_object_get(sam_policy, "ruleList");
-        int rule_len = json_object_array_length(rule_list);
+	bool bExistTargetPort = false;
+	struct json_object *filteringPort = json_object_array_get_idx(sam_policy, "filteringPort");
+	int filterport_len = json_object_array_length (filteringPort);
+	for (int i = 0 ; i < filterport_len ; i ++ )
+	{
+		///
+		const char * flt_port = json_object_get_string (json_object_array_get_idx(filteringPort, i));
+		if (flt_port)	{
+			if ((atoi(flt_port)) == (get_ssh_listening_port()) )		{
+				bExistTargetPort = true;
+				break;
+			}
+		}
+	}
 
-        for (int i = 0; i < rule_len; i++) {
-                struct json_object *rule = json_object_array_get_idx(rule_list, i);
-                struct json_object *ip_list = json_object_object_get(rule, "ipList");
-                struct json_object *account_list = json_object_object_get(rule, "account");
+	if (bExistTargetPort == false)
+		return 0;
+
+	struct json_object *rule_list = json_object_object_get(sam_policy, "ruleList");
+	int rule_len = json_object_array_length(rule_list);
+
+	for (int i = 0; i < rule_len; i++) {
+		struct json_object *rule = json_object_array_get_idx(rule_list, i);
+		struct json_object *ip_list = json_object_object_get(rule, "ipList");
+		struct json_object *account_list = json_object_object_get(rule, "acctIdList");
+
+		struct json_object *access_date = json_object_object_get(rule, "pmsTerm");
+		struct json_object *wday_list = json_object_object_get(rule, "wdayList");
+		
+
+		int ip_match = 0;
+		int ip_len = json_object_array_length(ip_list);
+		for (int j = 0; j < ip_len; j++) {
+				const char *range = json_object_get_string(json_object_array_get_idx(ip_list, j));
+
+				if (is_ip_in_range(ip, range)) {
+						ip_match = 1;
+						break;
+				}
+		}
+
+		if (ip_match == 0) continue;
+
+		if (!is_account_in_list(account, account_list)) continue;
+
+		*agtAuthNo 	= strdup(json_object_get_string(json_object_object_get(rule, "agtAuthNo")));
+		*action 	= json_object_get_int(json_object_object_get(rule, "pmsShutYn"));
+        *logging 	= json_object_get_int(json_object_object_get(rule, "logUseYn"));
+
 /*
-                struct json_object *access_date = json_object_object_get(rule, "accessDate");
-                struct json_object *wday_list = json_object_object_get(rule, "wdayList");
-*/
-                int ip_match = 0;
-                int ip_len = json_object_array_length(ip_list);
-                for (int j = 0; j < ip_len; j++) {
-                        const char *range = json_object_get_string(json_object_array_get_idx(ip_list, j));
+		const char *start_date = json_object_get_string(json_object_object_get(access_date, "start"));
+		const char *end_date = json_object_get_string(json_object_object_get(access_date, "end"));
 
-                        if (is_ip_in_range(ip, range)) {
-                                ip_match = 1;
-                                break;
-                        }
-                }
+		if (!is_time_in_range(start_date, end_date, current_time)) continue;
 
-                if (ip_match == 0) continue;
-
-                if (!is_account_in_list(account, account_list)) continue;
-
-		*agtAuthNo = strdup(json_object_get_string(json_object_object_get(rule, "agtAuthNo")));
-		//int action = json_object_get_int(json_object_object_get(rule, "action"));
-		*action = json_object_get_int(json_object_object_get(rule, "action"));
-                *logging = json_object_get_int(json_object_object_get(rule, "logging"));
-
-/*
-                const char *start_date = json_object_get_string(json_object_object_get(access_date, "start"));
-                const char *end_date = json_object_get_string(json_object_object_get(access_date, "end"));
-
-                if (!is_time_in_range(start_date, end_date, current_time)) continue;
-
-                if (!is_wday_time_valid(wday_list, current_wday, current_time)) continue;
+		if (!is_wday_time_valid(wday_list, current_wday, current_time)) continue;
 
 */
-                json_object_put(parsed_json);
-                return 1;
-        }
+		json_object_put(parsed_json);
+		return 1;
+    }
 
-        json_object_put(parsed_json);
-        return 0;
+	json_object_put(parsed_json);
+	return 0;
 }
 
 
