@@ -28,7 +28,7 @@ make
 echo "Copying linked libraries..."
 LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib/nda-pam"
 mkdir -p "$LIB_COPY_DIR"
-ldd nda-pam.so | awk '{if (NF > 2) print $3}' | while read -r lib; do
+ldd "$BUILD_TIMESTAMP_DIR/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
     if [ -f "$lib" ]; then
         cp -u "$lib" "$LIB_COPY_DIR"
     fi
@@ -60,47 +60,4 @@ echo "Pushing changes to Git repository..."
 git push origin $GIT_BRANCH
 
 echo "Build and Git update completed successfully!"
-
-CC = gcc
-
-# Library and include paths
-LIB_DIR = /hiagt/lib/nda-pam/
-CFLAGS = -fPIC -I$(LIB_DIR)/include -Wextra -g -std=c99 -D_GNU_SOURCE
-LDFLAGS = -shared -fPIC -L$(LIB_DIR) -Wl,-rpath,$(LIB_DIR)
-
-# Libraries to link against
-LIBS = -lcurl -lcrypto -lssl -ljson-c -lpam -lcrypt -luuid
-
-# Target output
-TARGET = nda-pam.so
-
-# Source and object files
-PAM_MODULE_SRC = nd_nix_pam.c
-ND_UTILS_C = ./libsrc/nd_utils.c
-ND_UTILS_H = ./libsrc/nd_utils.h
-ND_LOGS_C = ./libsrc/nd_nix_logs.c
-ND_LOGS_H = ./libsrc/nd_nix_logs.h
-ND_RESTAPI_C = ./libsrc/nd_restapi_func.c
-ND_RESTAPI_H = ./libsrc/nd_restapi_func.h
-
-SRCS = $(PAM_MODULE_SRC) $(ND_UTILS_C) $(ND_LOGS_C) $(ND_RESTAPI_C)
-HEADERS = $(ND_UTILS_H) $(ND_LOGS_H) $(ND_RESTAPI_H)
-OBJS = $(SRCS:.c=.o)
-
-# Default target
-all: $(TARGET)
-
-# Build shared object
-$(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@
-
-# Compile source files
-%.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean up generated files
-clean:
-	rm -f $(OBJS) $(TARGET)
-
-.PHONY: all clean
 
