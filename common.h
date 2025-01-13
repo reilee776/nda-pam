@@ -1,7 +1,7 @@
 #ifndef _COMMON_H__
 #define _COMMON_H__
 
-#define _POSIX_C_SOURCE 200112L
+//#define _POSIX_C_SOURCE 200112L
 
 #include <netinet/in.h>
 #define IPV4_BUFFER_SIZE 	16
@@ -288,7 +288,7 @@ extern int g_nDataSshPort;
 
 extern char * g_sConfFilePath;
 
-char g_sDataAgentId[2];
+extern char g_sDataAgentId[2];
 
 /*
 		// su log format

@@ -1,5 +1,6 @@
 #ifndef ND_UTILS_H
 #define ND_UTILS_H
+#include <json-c/json.h>
 #include <security/pam_ext.h>
 #include "../common.h"
 //	[etc]
