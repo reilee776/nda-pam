@@ -25,19 +25,38 @@ make clean
 make
 
 # ldd를 사용하여 참조 라이브러리를 복사
-echo "Copying linked libraries..."
-LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib/nda-pam"
-mkdir -p "$LIB_COPY_DIR"
-ldd "$BUILD_TIMESTAMP_DIR/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
-    if [ -f "$lib" ]; then
-        cp -u "$lib" "$LIB_COPY_DIR"
-    fi
-done
+#echo "Copying linked libraries..."
+#LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib/nda-pam"
+#mkdir -p "$LIB_COPY_DIR"
+#ldd "$BUILD_TIMESTAMP_DIR/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
+#    if [ -f "$lib" ]; then
+#        cp -u "$lib" "$LIB_COPY_DIR"
+#    fi
+#done
 
 # 빌드 결과를 OS 및 타임스탬프 디렉토리에 복사
 echo "Copying build results to $BUILD_TIMESTAMP_DIR..."
 mkdir -p $BUILD_TIMESTAMP_DIR
 cp -r *.so $BUILD_TIMESTAMP_DIR || true
+
+# ldd를 사용하여 참조 라이브러리를 복사
+LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib"
+mkdir -p "$LIB_COPY_DIR"
+if [ -f "$BUILD_TIMESTAMP_DIR/nda-pam.so" ]; then
+    echo "Copying linked libraries to $LIB_COPY_DIR..."
+    ldd "$BUILD_TIMESTAMP_DIR/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
+        if [ -f "$lib" ]; then
+            echo "Copying $lib to $LIB_COPY_DIR"
+            cp -u "$lib" "$LIB_COPY_DIR"
+        else
+            echo "Warning: $lib not found!"
+        fi
+    done
+else
+    echo "Error: $BUILD_TIMESTAMP_DIR/nda-pam.so not found!"
+    exit 1
+fi
+
 
 # Git 상태 확인
 echo "Preparing to update Git repository..."
