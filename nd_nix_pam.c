@@ -138,71 +138,6 @@ static void cleanup_func(pam_handle_t *pamh, void *data, int error_status)
 }
 
 /*
-	//Banner image displayed upon successful authentication.
-*/
-void print_nd_banner(void)
-{
-	printf("\n\n");
-	printf("\x1b[31m     NNNN              NNNN  DDDDDDDDDDDDDDDDD                       \033[0m\n");
-	printf("\x1b[32m     NNNN  NNNN        NNNN                  DDDDD   nn    nn  eeeeeee  tttttttt     a      nn    nn   ddddddd   \033[0m\n");
-	printf("\x1b[33m     NNNN   NNNN       NNNN                  DDDDD   nnn   nn  ee          tt       aaa     nnn   nn   dd    dd  \033[0m\n");
-	printf("\x1b[34m     NNNN    NNNN      NNNN                  DDDDD   nnnn  nn  ee          tt      aa aa    nnnn  nn   dd     dd \033[0m\n");
-	printf("     NNNN     NNNN     NNNN                  DDDDD   nn nn nn  eeeeeee     tt     aa   aa   nn nn nn   dd     dd \033[0m\n");
-	printf("     NNNN      NNNN    NNNN                  DDDDD   nn  nnnn  ee          tt    aaaaa  aa  nn  nnnn   dd     dd \n");
-	printf("     NNNN       NNNN   NNNN                  DDDDD   nn   nnn  ee          tt    aaaaaa aa  nn   nnn   dd    dd  \n");
-	printf("     NNNNNNNNN   NNNN  NNNN                  DDDDD   nn    nn  eeeeeee     tt    aa     aa  nn    nn   ddddddd   \n");
-	printf("     NNNNNNNNNNN    NNNNNNN  DDDDDDDDDDDDDDDDDD                      \n");
-	printf("     NNNN             NNNNN  DDDDDDDDDDDDDDD                 \n");
-
-	printf("\n\n");
-}
-
-/*
-	//Banner image displayed upon successful authentication. TEMP
-*/
-void print_nd_banner_type2(void)
-{
-	printf("\n\n");
-	printf("::::::::::::::::::::::::::::::::::::::::::: #\tWelcome to the Secure Login System! \n");
-	printf(":::::       ::::::::::             :::::::: \n");
-	printf(":::::    :   :::::::::    :::::::   ::::::: #\tHello, and welcome to Netand's secure environment. \n");
-	printf(":::::    ::    :::::::    :::::::::   ::::: #\tPlease be mindful of your security at all times as you access this system.  \n");
-	printf(":::::    ::::   ::::::    ::::::::::   :::: #\tWe strive to maintain the highest levels of protection for your data and privacy. \n");
-	printf(":::::    :::::   :::::    ::::::::::   :::: \n");
-	printf(":::::    ::::::   ::::    ::::::::::   :::: \n");
-	printf(":::::    :::::::   :::    ::::::::::   :::: \n");
-	printf(":::::       .::::   ::    ::::::::::   :::: \n");
-	printf(":::::         ::::        :::::::::   ::::: \n");
-	printf(":::::           ::::      ::::::::   :::::: \n");
-	printf(":::::    ::::::::::::               ::::::: \n");
-	printf("::::::::::::::::::::::::::::::::::::::::::: \n");
-	printf("\n\n");
-}
-
-/*
-	//Welcome message displayed upon successful authentication.
-*/
-void print_nd_warnning_msg(void)
-{
-	printf("#\tWelcome to the Secure Login System!\n");
-	printf("#\n");
-	printf("#\tHello, and welcome to Netand's secure environment. \n");
-	printf("#\tPlease be mindful of your security at all times as you access this system. \n");
-	printf("#\tWe strive to maintain the highest levels of protection for your data and privacy.\n");
-	printf("#\n");
-	printf("#\tThis is a secure login system designed to protect your credentials and sensitive information. \n");
-	printf("#\tUnauthorized access is strictly prohibited, and all activities are logged and monitored for your safety.\n");
-	printf("#\tPlease ensure that you are accessing this system for authorized purposes only. \n");
-	printf("#\tMisuse of this system could result in severe penalties, including suspension of access.\n");
-	printf("#\n");
-	printf("#\t\x1b[31m⚠️ Attention: Network security is our top priority. Any suspicious activity will be flagged and reported to the \033[0m\n#\t\x1b[31mappropriate authorities.\033[0m\n");
-	printf("#\n");
-	printf("#\tRemember, safeguarding your login credentials is your responsibility. Always keep them private and secure.\n");
-
-	printf("#\tThank you for choosing Netand. Stay vigilant and proceed with caution. Secure your connection and have a \n#\tproductive session!\n\n");
-}
-
-/*
 	//Function to retrieve the failure count stored locally.
 */
 int read_fail_count(const char *username)
@@ -843,7 +778,7 @@ PolicyValidationResult validate_access_policies(const char *rulePath, const Sess
 #else
 	// Policy validation without date support
 	if (is_pam_user_ndshell(pamh) &&
-		validate_json_sampolicy_without_date(Path(rulePath),
+		validate_json_sampolicy_without_date(getPamRuleFilePath(rulePath),
 											 userInfo->remote_host,
 											 userInfo->current_user,
 											 &result.sam_agtAuthNo,

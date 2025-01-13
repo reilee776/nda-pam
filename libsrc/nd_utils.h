@@ -3,6 +3,10 @@
 #include <json-c/json.h>
 #include <security/pam_ext.h>
 #include "../common.h"
+
+void print_nd_banner(void);
+void print_nd_banner_type2(void);
+void print_nd_warnning_msg(void);
 //	[etc]
 /*
         //Function to generate a unique value for use as a session key.
