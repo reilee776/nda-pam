@@ -24,16 +24,6 @@ cd $REPO_DIR
 make clean
 make
 
-# ldd를 사용하여 참조 라이브러리를 복사
-#echo "Copying linked libraries..."
-#LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib/nda-pam"
-#mkdir -p "$LIB_COPY_DIR"
-#ldd "$BUILD_TIMESTAMP_DIR/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
-#    if [ -f "$lib" ]; then
-#        cp -u "$lib" "$LIB_COPY_DIR"
-#    fi
-#done
-
 # 빌드 결과를 OS 및 타임스탬프 디렉토리에 복사
 echo "Copying build results to $BUILD_TIMESTAMP_DIR..."
 mkdir -p $BUILD_TIMESTAMP_DIR
@@ -57,7 +47,6 @@ else
     exit 1
 fi
 
-
 # Git 상태 확인
 echo "Preparing to update Git repository..."
 cd $REPO_DIR
@@ -79,4 +68,3 @@ echo "Pushing changes to Git repository..."
 git push origin $GIT_BRANCH
 
 echo "Build and Git update completed successfully!"
-
