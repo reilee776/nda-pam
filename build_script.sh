@@ -53,11 +53,12 @@ cd $REPO_DIR
 
 # 빌드 결과를 Git 리포지토리로 이동
 mkdir -p "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"
-cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"
+mkdir -p "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP/bin"
+cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"/bin
 
 # Git 설정 (필요 시 사용자 정보 설정)
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
+git config --global user.name "reilee776"
+git config --global user.email "blueangel478@hotmail.com"
 
 # Git 작업 디렉토리에 변경 내용 반영
 git add -A

@@ -181,44 +181,101 @@ void get_local_ip(char *ip_buffer, size_t buffer_size);
 */
 void parse_ssh_connection(pam_handle_t *pamh, bool isConsole );
 
+/*
+	//
+*/
 const char * getPamRuleFilePath(const char* sDataHomeDir);
 
+/*
+	//
+*/
 const char * getPambakSulogFilePath(const char* sDataHomeDir);
 
+/*
+	//
+*/
 const char * getPambakSessionlogFilePath(const char* sDataHomeDir);
 
+/*
+	//
+*/
 const char * getPambaklogFilePath(const char* sDataHomeDir);
 
+/*
+	//
+*/
 const char * getPamConfFilePath(const char * sDataHomeDir);
 
+/*
+	//
+*/
 const char * getPamLogFilePath(void);
 
+/*
+	//
+*/
 int is_valid_ip(const char *ip);
 
 //void get_env_vars(pid_t pid);
+/*
+	//
+*/
 char* get_env_var(pid_t pid, const char* var_name);
+
+/*
+	//
+*/
 void print_env_vars(pid_t pid);
 
+/*
+	//
+*/
 char* read_env_variable(pid_t pid, const char* var_name) ;
 
+/*
+	//
+*/
 pid_t get_tty_pid(const char *tty_name);
 
+/*
+	//
+*/
 char* resolve_actual_tty(pid_t pid);
 
-//
+/*
+	//
+*/
 char *generate_uuid();
 
+/*
+	//
+*/
 int get_shell_from_pam(pam_handle_t *pamh, char **shell);
 
+/*
+	//
+*/
 bool is_pam_user_ndshell(pam_handle_t *pamh);
 
+/*
+	//
+*/
 int get_agent_id(const char *filename);
 
+/*
+	//
+*/
 const char *get_value_as_string(const char *json_file, const char *key);
 
+/*
+	//
+*/
 int check_pam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no, int *action, int *logging);
 //int check_pam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no);
 
+/*
+	//
+*/
 int check_sam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no);
 #ifdef _OLD_SRC_
 struct _archive_log* create_archive_log(
@@ -244,6 +301,9 @@ struct _archive_log* create_archive_log(
 ) ;
 #else // _OLD_SRC_
 
+/*
+	//
+*/
 struct _archive_log* create_archive_log		(
 
 	const char *svrConnStartTime,
@@ -273,51 +333,111 @@ struct _archive_log* create_archive_log		(
 
 #endif //_OLD_SRC_
 
+/*
+	//
+*/
 int is_ip_in_range(const char *ip, const char *range);
 
+/*
+	//
+*/
 int is_account_in_list(const char *account, struct json_object *account_list);
 
+/*
+	//
+*/
 int is_time_in_range(const char *start, const char *end, time_t current_time);
 
+/*
+	//
+*/
 int is_wday_time_valid(const struct json_object *wday_list, int current_wday, time_t current_time);
 
+/*
+	//
+*/
 int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday, char **agtAuthNo,int *action, int *logging);
 
+/*
+	//
+*/
 int validate_json_sampolicy_without_date(const char *json_file, const char *ip, const char *account, char **agtAuthNo,int *action, int *logging);
 
+/*
+	//
+*/
 int validate_json_exceptionConnection(const char *json_file, const char *ip );
 
+/*
+	//
+*/
 int check_su_session(pam_handle_t *pamh);
 
+/*
+	//
+*/
 // Function to initialize session info
 SessionInfo *init_session_info();
 
+/*
+	//
+*/
 // Function to free session info
 void free_session_info(SessionInfo *info);
 
+/*
+	//
+*/
 // Utility function to retrieve PAM items
 char *get_pam_item_str(pam_handle_t *pamh, int item_type);
 
+/*
+	//
+*/
 // Function to collect console session info
 SessionInfo *get_console_session_info(pam_handle_t *pamh);
 
+/*
+	//
+*/
 // Function to collect SSH session info
 SessionInfo *get_ssh_session_info(pam_handle_t *pamh);
 
+/*
+	//
+*/
 // Function to collect su session info
 SessionInfo *get_su_session_info(pam_handle_t *pamh);
 
+/*
+	//
+*/
 int get_ssh_port();
 
+/*
+	//
+*/
 int get_ssh_listening_port_from_cmd() ;
 
+/*
+	//
+*/
 int get_current_ssh_port(pam_handle_t *pamh);
 
+/*
+	//
+*/
 int get_ssh_port(pam_handle_t *pamh) ;
 
+/*
+	//
+*/
 // Function declaration
 char* read_config_value(const char* filename, const char* section, const char* key);
 
+/*
+	//
+*/
 // Function to get environment variable (PAM or global)
 const char* get_env_variable(pam_handle_t *pamh, const char *key);
  
