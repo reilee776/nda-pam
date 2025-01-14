@@ -648,6 +648,31 @@ struct pam_user_info
 	
 };
 
+struct pam_working_history_info
+{
+	char svrConnStartTime[ND_TIME_MAX_LEN];
+	char svrConnEndTime[ND_TIME_MAX_LEN];
+	char svrConnRstTpCode[4];
+	char svrConnFailRsnCode[4];
+	char agtNo[16];
+	char agtConnFormTpCode[4];
+	char agtAuthNo[ND_AGTAUTHNO_MAX_LEN];
+	char portNo[8];
+	char userIp[ND_SOURCEIP_MAX_LEN];
+	char securStepNo[ND_SECUR_STEP_NO_MAX_LEN];
+	char svrConnSessKey[ND_UUID_LENGTH];
+	char connAcctId[ND_SYSACCOUNT_MAX_LEN];
+	char switchAcctId[ND_SYSACCOUNT_MAX_LEN];
+	char pamAgtAuthNo[ND_AGTAUTHNO_MAX_LEN];
+	char userNo[18];
+	char pamCertDtlCode[4];
+	char pamCertDtlAuthCode[4];
+	char certTpCode[ND_CERT_TP_CODE_MAX_LEN];
+	char certAppTpCode[ND_CERT_APP_TP_CODE_MAX_LEN];
+	char certSucesFailYn[ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN];
+	char certStepSeqNo[ND_CERT_STEP_SEQ_NO_MAX_LEN];
+};
+
 /*
 	// two-fact login index ??
 */
