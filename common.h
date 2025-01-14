@@ -71,6 +71,7 @@
 #define PAM_PRODUCT_NM					"nda-pam"
 
 #define CONFIG_FILE 					"nda-pam-config.conf"
+#define CONFIG_MGR_FILE					"agt-cnf"
 
 #define BACKUP_LOG_FILE 				"nda-pam-backup.log"
 #define BACKUP_SESSION_LOG_FILE 			"nda-pam-session-backup.log"
@@ -90,7 +91,7 @@
 #define DEBUG_LOG_FILE 					"nda-pam.log"
 
 #define RULE_FILE 					"nda-pam-rule.dat"
-#define COMMON_RULE_FILE				"common-rule"
+#define COMMON_RULE_FILE				"common-rule.json"
 #define SURULE_FILE 					"nda-pam-su-rule.dat"
 
 #define SHARED_DATA_KEY 				"my_shared_data"
@@ -321,6 +322,10 @@ extern char g_sDataAgentId[2];
 #define SECTION_NM_TWOFACT_CONF "TOWFACT_CONF"
 #define SECTION_NM_SYSLOGIN_CONF "SYSLOGIN_CONF"
 
+//
+#define SECTION_NM_AGENT_INFO_CONF "AGENT_INFO"
+
+
 /*
 	// config value data
 */
@@ -341,11 +346,16 @@ extern char g_sDataAgentId[2];
 #define PAM_CONF_KEY_PAM_MODE 		"PAM_MODE"
 #define PAM_CONF_KEY_SU_CONTROL 	"PAM_SU_CONTROL"
 #define PAM_CONSOLE_CONTROL 		"PAM_CONSOLE_CONTROL"
-#define PAM_LOG_MODE 			"PAM_LOG_MODE"
+#define PAM_LOG_MODE 				"PAM_LOG_MODE"
 #define PAM_AUTHSVR_LINKAGE 		"PAM_AUTHSVR_LINKAGE"
 #define PAM_AUTHSVR_EMERGENCY_ACTION 	"PAM_AUTHSVR_EMERGENCY_ACTION"
 #define PAM_AUTHSVR_TIMEOUT 		"PAM_AUTHSVR_TIMEOUT"
-#define PAM_AUTHSVR_USESSL 		"SERVER_USE_SSL"
+#define PAM_AUTHSVR_USESSL 			"SERVER_USE_SSL"
+
+//USE_AGT_CONF
+#define PAM_AUTH_EMERGENCY_BYPASS_ON "AUTH_EMERGENCY_BYPASS_ON"
+#define PAM_AUTH_SERVER_IP			"AUTH_SERVER_IP"
+#define PAM_AUTH_SERVER_PORT		"AUTH_SERVER_PORT"
 
 #define PAM_CONF_KEY_SERVERIP 		"SERVER_IP"
 #define PAM_CONF_KEY_SERVERPORT 	"SERVER_PORT"

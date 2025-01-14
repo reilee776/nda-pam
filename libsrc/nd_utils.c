@@ -1704,7 +1704,8 @@ const char *getPamLogFilePath(void)
 const char *getPamConfFilePath(const char *sDataHomeDir)
 {
 	static char pam_conf_file[256];
-	snprintf(pam_conf_file, sizeof(pam_conf_file), "/%s/%s/%s/%s", sDataHomeDir, CONFIG_DIR, PAM_PRODUCT_NM, CONFIG_FILE);
+	//snprintf(pam_conf_file, sizeof(pam_conf_file), "/%s/%s/%s/%s", sDataHomeDir, CONFIG_DIR, PAM_PRODUCT_NM, CONFIG_FILE);
+	snprintf (pam_conf_file, sizeof (pam_conf_file), "/%s/%s/%s", sDataHomeDir, CONFIG_DIR, CONFIG_MGR_FILE);
 	return pam_conf_file;
 }
 

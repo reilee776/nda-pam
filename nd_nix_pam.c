@@ -307,7 +307,11 @@ void get_user_info(struct pam_user_info *user_info, pam_handle_t *pamh)
 	nd_log(NDLOG_INF, "[get pam session user information]");
 	nd_log(NDLOG_INF, "--------------------------------------------------------------------");
 
+#ifdef _OLD_
 	char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_EMERGENCY_ACTION); // PAM_AUTHSVR_EMERGENCY_ACTION
+#else
+	char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_EMERGENCY_BYPASS_ON);
+#endif 
 
 	if (user_info == NULL || pamh == NULL)
 	{
@@ -829,6 +833,8 @@ int nd_pam_authenticate_user(char *uuid_str, /*struct pam_user_info*/ SessionInf
 		.iMsgType = 0,
 		.iMsgCode = 0};
 
+	bool isBypass = false;
+
 	//
 	///
 	nd_log(NDLOG_TRC, "start function - nd_pam_authenticate_user");
@@ -843,9 +849,19 @@ int nd_pam_authenticate_user(char *uuid_str, /*struct pam_user_info*/ SessionInf
 	/*
 		// Retrieve the server connection information from the configuration file.
 	*/
+#ifdef _USE_PAM_CONF
 	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);
 	char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
 	char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_EMERGENCY_ACTION);
+#else //_USE_AGT_CONF
+	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_SERVER_IP);
+	char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_SERVER_PORT);
+	char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_EMERGENCY_BYPASS_ON);
+
+	if (strcmp (authsvr_emergency_act, "1") == 0)
+		isBypass = true;
+
+#endif 
 
 	//
 	///
@@ -1019,7 +1035,7 @@ int nd_pam_authenticate_user(char *uuid_str, /*struct pam_user_info*/ SessionInf
 	{
 		if (bisAlive_server == false)
 		{
-			if (strcmp(authsvr_emergency_act, SET_MODE_BYPASS) == 0)
+			if (strcmp(authsvr_emergency_act, "1") == 0)
 			{
 				snprintf(svrConnRstTpCode, sizeof(svrConnRstTpCode), "%s", PAM_SVR_CONN_RST_TP_CODE_EMERGC_SUCCESS);
 				retval = PAM_SUCCESS;
@@ -1034,7 +1050,7 @@ int nd_pam_authenticate_user(char *uuid_str, /*struct pam_user_info*/ SessionInf
 		}
 		else
 		{
-			if (strcmp(authsvr_emergency_act, SET_MODE_BYPASS) == 0)
+			if (strcmp(authsvr_emergency_act, "1") == 0)
 			{
 				snprintf(svrConnRstTpCode, sizeof(svrConnRstTpCode), "%s", PAM_SVR_CONN_RST_TP_CODE_NORMAL_SUCCESS);
 				retval = PAM_SUCCESS;
@@ -1383,9 +1399,9 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 	snprintf(svrConnSessKey, sizeof(svrConnSessKey), "%s", uuid_str);
 	snprintf(pamCertDtlCode, sizeof(pamCertDtlCode), "%s", PAM_LOGIN);
 
-	char * auth_server_ip   = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);
-	char * auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
-	char * authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF,PAM_AUTHSVR_EMERGENCY_ACTION);
+	char * auth_server_ip   = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_SERVER_IP);
+	char * auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_SERVER_PORT);
+	char * authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_EMERGENCY_BYPASS_ON);
 
 	/*
 			// convert server port
@@ -1439,7 +1455,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 
 		if (bisAlive_server != true )
 		{
-			if (strcmp (authsvr_emergency_act, SET_MODE_BYPASS) == 0 )      {
+			if (strcmp (authsvr_emergency_act, "1") == 0 )      {
 
 				/*
 						Notify NDSHELL of information bypassed due to policy verification/authentication tasks in an emergency situation.
