@@ -28,14 +28,21 @@ make
 echo "Copying build results to $BUILD_TIMESTAMP_DIR..."
 mkdir -p $BUILD_TIMESTAMP_DIR
 mkdir -p "$BUILD_TIMESTAMP_DIR/bin"
-cp -r *.so "$BUILD_TIMESTAMP_DIR/bin"|| true
+mkdir -p "$BUILD_TIMESTAMP_DIR/bin/nda-pam"
+mkdir -p "$BUILD_TIMESTAMP_DIR/conf"
+mkdir -p "$BUILD_TIMESTAMP_DIR/conf/nda-pam"
+mkdir -p "$BUILD_TIMESTAMP_DIR/data"
+mkdir -p "$BUILD_TIMESTAMP_DIR/data/nda-pam"
+mkdir -p "$BUILD_TIMESTAMP_DIR/rule"
+
+cp -r *.so "$BUILD_TIMESTAMP_DIR/bin/nda-pam"|| true
 
 # ldd를 사용하여 참조 라이브러리를 복사
 LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib"
 mkdir -p "$LIB_COPY_DIR"
-if [ -f "$BUILD_TIMESTAMP_DIR/bin/nda-pam.so" ]; then
+if [ -f "$BUILD_TIMESTAMP_DIR/bin/nda-pam/nda-pam.so" ]; then
     echo "Copying linked libraries to $LIB_COPY_DIR..."
-    ldd "$BUILD_TIMESTAMP_DIR/bin/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
+    ldd "$BUILD_TIMESTAMP_DIR/bin/nda-pam/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
         if [ -f "$lib" ]; then
             echo "Copying $lib to $LIB_COPY_DIR"
             cp -u "$lib" "$LIB_COPY_DIR"
@@ -44,7 +51,7 @@ if [ -f "$BUILD_TIMESTAMP_DIR/bin/nda-pam.so" ]; then
         fi
     done
 else
-    echo "Error: $BUILD_TIMESTAMP_DIR/nda-pam.so not found!"
+    echo "Error: $BUILD_TIMESTAMP_DIR/bin/nda-pam/nda-pam.so not found!"
     exit 1
 fi
 
