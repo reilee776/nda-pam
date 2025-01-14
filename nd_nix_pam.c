@@ -477,12 +477,7 @@ password_next:
 		strncpy(user_info->shell, pw->pw_shell, sizeof(user_info->shell) - 1);
 		user_info->shell[sizeof(user_info->shell) - 1] = '\0';
 	}
-
-	/*
-	nd_log (NDLOG_INF, "\t- user uid          :%d", user_info->uid);
-	nd_log (NDLOG_INF, "\t- user gid          :%d", user_info->gid);
-	*/
-
+	
 	/*
 		// Authentication Method (ex: password)
 	*/

@@ -2753,11 +2753,11 @@ int validate_json_sampolicy(const char *json_file, const char *ip, const char *a
 
 	for (int i = 0; i < rule_len; i++)
 	{
-		struct json_object *rule = json_object_array_get_idx(rule_list, i);
-		struct json_object *ip_list = json_object_object_get(rule, "ipList");
+		struct json_object *rule 		= json_object_array_get_idx(rule_list, i);
+		struct json_object *ip_list 	= json_object_object_get(rule, "ipList");
 		struct json_object *account_list = json_object_object_get(rule, "acctIdList");
 		struct json_object *access_date = json_object_object_get(rule, "pmsTerm");
-		struct json_object *wday_list = json_object_object_get(rule, "wdayList");
+		struct json_object *wday_list 	= json_object_object_get(rule, "wdayList");
 
 		int ip_match = 0;
 		int ip_len = json_object_array_length(ip_list);
@@ -2940,41 +2940,41 @@ int validate_json_exceptionConnection(const char *json_file, const char *ip)
 		return 0;
 	}
 
-	// exceptionIpList 키 확인
+	// exceptionIpList key
 	if (!json_object_object_get_ex(parsed_json, "exceptionIpList", &exceptionIpList))
 	{
 		// fprintf(stderr, "Key 'exceptionIpList' not found\n");
-		json_object_put(parsed_json); // 메모리 해제
+		json_object_put(parsed_json); // free memory
 		return 0;
 	}
 
-	// 배열인지 확인
+	// check to whether it is an array
 	if (json_object_get_type(exceptionIpList) != json_type_array)
 	{
 		// fprintf(stderr, "'exceptionIpList' is not an array\n");
-		json_object_put(parsed_json); // 메모리 해제
+		json_object_put(parsed_json); // free memory
 		return 0;
 	}
 
-	// 배열 길이 가져오기
+	// get array length
 	array_len = json_object_array_length(exceptionIpList);
 	for (i = 0; i < array_len; i++)
 	{
-		// 배열의 각 요소 가져오기
+		// get object of array
 		ip_obj = json_object_array_get_idx(exceptionIpList, i);
 		const char *list_ip = json_object_get_string(ip_obj);
 
-		// 입력된 IP와 비교
+		// compar input IP and list item
 		if (strcmp(list_ip, ip) == 0)
 		{
-			json_object_put(parsed_json); // 메모리 해제
-			return 1;					  // IP가 리스트에 있음
+			json_object_put(parsed_json); // free memory
+			return 1;					  // exist ip in list
 		}
 	}
 
-	// 메모리 해제
+	// free memory 
 	json_object_put(parsed_json);
-	return 0; // IP가 리스트에 없음
+	return 0; // net exist ip in list
 }
 
 int check_su_session(pam_handle_t *pamh)
