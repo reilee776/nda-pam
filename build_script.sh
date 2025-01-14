@@ -27,14 +27,15 @@ make
 # 빌드 결과를 OS 및 타임스탬프 디렉토리에 복사
 echo "Copying build results to $BUILD_TIMESTAMP_DIR..."
 mkdir -p $BUILD_TIMESTAMP_DIR
-cp -r *.so $BUILD_TIMESTAMP_DIR || true
+mkdir -p "$BUILD_TIMESTAMP_DIR/bin"
+cp -r *.so "$BUILD_TIMESTAMP_DIR/bin"|| true
 
 # ldd를 사용하여 참조 라이브러리를 복사
 LIB_COPY_DIR="$BUILD_TIMESTAMP_DIR/lib"
 mkdir -p "$LIB_COPY_DIR"
-if [ -f "$BUILD_TIMESTAMP_DIR/nda-pam.so" ]; then
+if [ -f "$BUILD_TIMESTAMP_DIR/bin/nda-pam.so" ]; then
     echo "Copying linked libraries to $LIB_COPY_DIR..."
-    ldd "$BUILD_TIMESTAMP_DIR/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
+    ldd "$BUILD_TIMESTAMP_DIR/bin/nda-pam.so" | awk '{if (NF > 2) print $3}' | while read -r lib; do
         if [ -f "$lib" ]; then
             echo "Copying $lib to $LIB_COPY_DIR"
             cp -u "$lib" "$LIB_COPY_DIR"
@@ -53,8 +54,7 @@ cd $REPO_DIR
 
 # 빌드 결과를 Git 리포지토리로 이동
 mkdir -p "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"
-mkdir -p "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP/bin"
-cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"/bin
+cp -r $BUILD_TIMESTAMP_DIR/* "$REPO_DIR/build_results/${OS_FRIENDLY_NAME}_$TIMESTAMP"
 
 # Git 설정 (필요 시 사용자 정보 설정)
 git config --global user.name "reilee776"
