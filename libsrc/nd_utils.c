@@ -329,17 +329,17 @@ int read_server_config(const char *section, char *ip_buffer, size_t ip_buffer_si
 */
 void getpamconf(struct st_pam_conf *pam_conf)
 {
-	char *server_pam_mode = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_CONF_KEY_PAM_MODE);			  // PAM_MODE
-	char *server_su_mode = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_CONF_KEY_SU_CONTROL);			  // PAM_SU_CONTROL
-	char *console_op_mode = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_CONSOLE_CONTROL);				  // PAM_CONSOLE_CONTROL
-	char *authsvr_linkage = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_LINKAGE);				  // PAM_AUTHSVR_LINKAGE
-	char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_EMERGENCY_ACTION); // PAM_AUTHSVR_EMERGENCY_ACTION
-	char *authsvr_timeout = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_TIMEOUT);				  // PAM_AUTHSVR_TIMEOUT
-
-	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);	   // SERVER_IP
-	char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT); // SERVER_PORT
-	char *auth_server_use = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERUSE);   // SERVER_USE
-
+	char *server_pam_mode = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_CONF_KEY_PAM_MODE);  // PAM_MODE
+	char *server_su_mode = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_CONF_KEY_SU_CONTROL); // PAM_SU_CONTROL
+	// char *console_op_mode = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_CONSOLE_CONTROL);				  // PAM_CONSOLE_CONTROL
+	char *authsvr_linkage = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_LINKAGE); // PAM_AUTHSVR_LINKAGE
+	// char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_EMERGENCY_ACTION); // PAM_AUTHSVR_EMERGENCY_ACTION
+	char *authsvr_timeout = get_value_from_inf(g_sConfFilePath, SECTION_NM_PAM_CONF, PAM_AUTHSVR_TIMEOUT); // PAM_AUTHSVR_TIMEOUT
+																										   /*
+																											   char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);	   // SERVER_IP
+																											   char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT); // SERVER_PORT
+																											   char *auth_server_use = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERUSE);   // SERVER_USE
+																										   */
 	/*
 			//
 	*/
@@ -368,6 +368,7 @@ void getpamconf(struct st_pam_conf *pam_conf)
 	/*
 			//
 	*/
+#ifdef _NOT_USE
 	if (console_op_mode)
 	{
 		strncpy(pam_conf->console_operate_mode, console_op_mode, MAX_OPMODE_LEN);
@@ -377,10 +378,12 @@ void getpamconf(struct st_pam_conf *pam_conf)
 	{
 		strncpy(pam_conf->console_operate_mode, SET_MODE_OFF, 4);
 	}
+#endif
 
 	/*
 			//
 	*/
+
 	if (authsvr_linkage)
 	{
 		strncpy(pam_conf->authsvr_linkage, authsvr_linkage, MAX_OPMODE_LEN);
@@ -391,6 +394,7 @@ void getpamconf(struct st_pam_conf *pam_conf)
 		strncpy(pam_conf->console_operate_mode, SET_MODE_OFF, 4);
 	}
 
+#ifdef _NOTUSE
 	/*
 			//
 	*/
@@ -403,7 +407,7 @@ void getpamconf(struct st_pam_conf *pam_conf)
 	{
 		strncpy(pam_conf->authsvr_emergency_act, SET_MODE_BYPASS, MAX_EMERGENCYMODE_LEN);
 	}
-
+#endif
 	/*
 			//
 	*/
@@ -419,6 +423,7 @@ void getpamconf(struct st_pam_conf *pam_conf)
 	/*
 			//
 	*/
+#ifdef _NOT_USE
 	if (auth_server_ip)
 	{
 		strncpy(pam_conf->auth_ip, auth_server_ip, IPV4_BUFFER_SIZE);
@@ -437,6 +442,7 @@ void getpamconf(struct st_pam_conf *pam_conf)
 	{
 		pam_conf->auth_port = PAM_HIAUTH_DEFAULT_PORT;
 	}
+#endif
 
 	nd_log(LOG_LEVEL_INFO, "====================================================================");
 	nd_log(LOG_LEVEL_INFO, "[read from the configuration file]");
@@ -445,13 +451,13 @@ void getpamconf(struct st_pam_conf *pam_conf)
 	nd_log(LOG_LEVEL_INFO, "--------------------------------------------------------------------");
 	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_MODE                       :%s", server_pam_mode ? server_pam_mode : "Could not read");
 	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_SU_CONTROL                 :%s", server_su_mode ? server_su_mode : "Could not read");
-	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_CONSOLE_CONTROL            :%s", console_op_mode ? console_op_mode : "Could not read");
+	//	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_CONSOLE_CONTROL            :%s", console_op_mode ? console_op_mode : "Could not read");
 	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_AUTHSVR_LINKAGE            :%s", authsvr_linkage ? authsvr_linkage : "Could not read");
-	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_AUTHSVR_EMERGENCY_ACTION   :%s", authsvr_emergency_act ? authsvr_emergency_act : "Could not read");
+	//	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_AUTHSVR_EMERGENCY_ACTION   :%s", authsvr_emergency_act ? authsvr_emergency_act : "Could not read");
 	nd_log(LOG_LEVEL_INFO, "\t- [section :PAM_CONF] PAM_AUTHSVR_TIMEOUT            :%s", authsvr_timeout ? authsvr_timeout : "Could not read");
-	nd_log(LOG_LEVEL_INFO, "\t- [section :HIAUTH_CONF] SERVER_IP                   :%s", auth_server_ip ? auth_server_ip : "Could not read");
-	nd_log(LOG_LEVEL_INFO, "\t- [section :HIAUTH_CONF] SERVER_PORT                 :%s", auth_server_port ? auth_server_port : "Could not read");
-	nd_log(LOG_LEVEL_INFO, "\t- [section :HIAUTH_CONF] SERVER_USE                  :%s", auth_server_use ? auth_server_use : "Could not read");
+	//	nd_log(LOG_LEVEL_INFO, "\t- [section :HIAUTH_CONF] SERVER_IP                   :%s", auth_server_ip ? auth_server_ip : "Could not read");
+	//	nd_log(LOG_LEVEL_INFO, "\t- [section :HIAUTH_CONF] SERVER_PORT                 :%s", auth_server_port ? auth_server_port : "Could not read");
+	//	nd_log(LOG_LEVEL_INFO, "\t- [section :HIAUTH_CONF] SERVER_USE                  :%s", auth_server_use ? auth_server_use : "Could not read");
 
 	nd_log(LOG_LEVEL_INFO, "====================================================================");
 }
@@ -510,6 +516,102 @@ int connect_to_server(int *sock, const char *section)
 	server.sin_family = AF_INET;
 	server.sin_port = htons(server_port);
 	server.sin_addr.s_addr = inet_addr(server_ip);
+
+	/*
+			// connect server
+	*/
+	// if (connect(*sock, (struct sockaddr *)&server, sizeof(server)) < 0) {
+	if (connect(*sock, (struct sockaddr *)&server, sizeof(server)) < 0 && errno != EINPROGRESS)
+	{
+
+		perror("connect failed.");
+		close(*sock);
+		return -4;
+	}
+
+	//
+	// 2025-01-07
+	// Use select() to check if the connection is complete
+	fd_set write_fds;
+	FD_ZERO(&write_fds);
+	FD_SET(*sock, &write_fds);
+
+	timeout.tv_sec = 0;		  // Timeout in seconds
+	timeout.tv_usec = 500000; // Timeout in microseconds (500ms)
+
+	if (select(*sock + 1, NULL, &write_fds, NULL, &timeout) > 0)
+	{
+		int error = 0;
+		socklen_t len = sizeof(error);
+
+		// Check the socket state
+		if (getsockopt(*sock, SOL_SOCKET, SO_ERROR, &error, &len) == 0 && error == 0)
+		{
+			close(sock);
+			return 1; // Connection successful
+		}
+	}
+
+	// Connection failed
+	close(*sock);
+
+	return -1; // success
+}
+
+int connect_logger_server(int *sock)
+{
+
+	char szMsg[1024] = {
+		0,
+	};
+	// char server_ip[16];
+	int server_port;
+	struct timeval timeout;
+
+	/*
+			// Read server settings
+	*/
+	/*
+	if (read_server_config(section, server_ip, sizeof(server_ip), &server_port) != 0)
+	{
+		return -1;
+	}
+	*/
+
+	char *agt_log_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_SERVER_INFO_CONF, "AGENT_LOG_LOCAL_PORT");
+	int authsvr_port = agt_log_port ? atoi(agt_log_port) : PAM_LOGGER_DEFAULT_PORT;
+
+	struct sockaddr_in server;
+
+	/*
+			// create socket
+	*/
+	*sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (*sock == -1)
+	{
+		sprintf(szMsg, "Failed socket creation - %s", strerror(errno));
+		return -2;
+	}
+
+	//
+	// 2025-01-07
+	// Set socket to non-blocking mode
+	if (set_non_blocking(*sock) < 0)
+	{
+		perror("[ERR] Failed to set non-blocking mode");
+		close(sock);
+		return -3;
+	}
+
+	// Configure server information
+	memset(&server, 0, sizeof(server));
+
+	/*
+			// Setting server address
+	*/
+	server.sin_family = AF_INET;
+	server.sin_port = htons(authsvr_port);
+	server.sin_addr.s_addr = inet_addr("127.0.0.1");
 
 	/*
 			// connect server
@@ -1148,8 +1250,8 @@ int sending_data_to_logger(char *sAgentId, unsigned char iType, unsigned char iC
 
 	// Move pointer to start of data (after header)
 	// char *data_ptr = sendbuff + sizeof(struct _msg_header_);
-	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, "HILOGER_CONF", PAM_CONF_KEY_SERVERIP);
-	char *auth_server_port = get_value_from_inf(g_sConfFilePath, "HILOGER_CONF", PAM_CONF_KEY_SERVERPORT);
+	// char *auth_server_ip = get_value_from_inf(g_sConfFilePath, "AGENT_INFO", PAM_CONF_KEY_SERVERIP);
+	char *auth_server_port = get_value_from_inf(g_sConfFilePath, "AGENT_INFO", "AGENT_LOG_LOCAL_PORT");
 
 	if (auth_server_port)
 	{
@@ -1160,7 +1262,8 @@ int sending_data_to_logger(char *sAgentId, unsigned char iType, unsigned char iC
 		authsvr_port = PAM_HIAUTH_DEFAULT_PORT;
 	}
 
-	retval = connect_to_server(&sock, "HILOGER_CONF");
+	// retval = connect_to_server(&sock, "HILOGER_CONF");
+	retval = connect_logger_server(&sock);
 	if (retval != 0)
 	{
 		close(sock);
@@ -1178,12 +1281,12 @@ int sending_data_to_logger(char *sAgentId, unsigned char iType, unsigned char iC
 
 int initializeAuthVariables(void)
 {
-	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERIP);
-	char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_SERVERPORT);
-	char *auth_use_ssl = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_AUTHSVR_USESSL);
+	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_AUTH_SERVER_IP);
+	char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_CONF_KEY_AUTH_SERVER_PORT);
+	// char *auth_use_ssl = get_value_from_inf(g_sConfFilePath, SECTION_NM_HIAUTH_CONF, PAM_AUTHSVR_USESSL);
 
-	MakeRdmURL(auth_server_ip, atoi(auth_server_port), g_sDataRandomUrl, sizeof(g_sDataRandomUrl), (strcmp(auth_use_ssl, CONF_VALUE_YES) == 0) ? 1 : 0);
-	MakeLoginURL(auth_server_ip, atoi(auth_server_port), g_sDataSystemLoginUrl, sizeof(g_sDataSystemLoginUrl), (strcmp(auth_use_ssl, CONF_VALUE_YES) == 0) ? 1 : 0);
+	MakeRdmURL(auth_server_ip, atoi(auth_server_port), g_sDataRandomUrl, sizeof(g_sDataRandomUrl), (strcmp("1", CONF_VALUE_YES) == 0) ? 1 : 0);
+	MakeLoginURL(auth_server_ip, atoi(auth_server_port), g_sDataSystemLoginUrl, sizeof(g_sDataSystemLoginUrl), (strcmp("1", CONF_VALUE_YES) == 0) ? 1 : 0);
 
 	nd_log(LOG_LEVEL_INFO, "====================================================================");
 	nd_log(LOG_LEVEL_INFO, "[API SERVER information read from the configuration file]");
@@ -1192,7 +1295,7 @@ int initializeAuthVariables(void)
 	nd_log(LOG_LEVEL_INFO, "--------------------------------------------------------------------");
 	nd_log(LOG_LEVEL_INFO, "\t- <api server> ip address   :%s", auth_server_ip ? auth_server_ip : "Could not read");
 	nd_log(LOG_LEVEL_INFO, "\t- <api server> ip port      :%s", auth_server_port ? auth_server_port : "Could not read");
-	nd_log(LOG_LEVEL_INFO, "\t- <api server> ssl use flag :%s", auth_use_ssl ? auth_use_ssl : "Could not read");
+	// nd_log(LOG_LEVEL_INFO, "\t- <api server> ssl use flag :%s", auth_use_ssl ? auth_use_ssl : "Could not read");
 
 	nd_log(LOG_LEVEL_INFO, "--------------------------------------------------------------------");
 	nd_log(LOG_LEVEL_INFO, "[API SERVER ENDPOINT information]");
@@ -1704,8 +1807,8 @@ const char *getPamLogFilePath(void)
 const char *getPamConfFilePath(const char *sDataHomeDir)
 {
 	static char pam_conf_file[256];
-	//snprintf(pam_conf_file, sizeof(pam_conf_file), "/%s/%s/%s/%s", sDataHomeDir, CONFIG_DIR, PAM_PRODUCT_NM, CONFIG_FILE);
-	snprintf (pam_conf_file, sizeof (pam_conf_file), "/%s/%s/%s", sDataHomeDir, CONFIG_DIR, CONFIG_MGR_FILE);
+	// snprintf(pam_conf_file, sizeof(pam_conf_file), "/%s/%s/%s/%s", sDataHomeDir, CONFIG_DIR, PAM_PRODUCT_NM, CONFIG_FILE);
+	snprintf(pam_conf_file, sizeof(pam_conf_file), "/%s/%s/%s", sDataHomeDir, CONFIG_DIR, CONFIG_MGR_FILE);
 	return pam_conf_file;
 }
 
@@ -2264,7 +2367,7 @@ int check_pam_policy(const char *json_file, const char *ip, const char *account,
 				const char *rule_ip = json_object_get_string(json_object_array_get_idx(ip_list, j));
 
 				if (is_ip_in_range(rule_ip, ip))
-				{	// IP 범위 처리
+				{ // IP 범위 처리
 					// Check account match
 					for (int k = 0; k < json_object_array_length(account_list); k++)
 					{
@@ -2748,16 +2851,36 @@ int validate_json_sampolicy(const char *json_file, const char *ip, const char *a
 		return 0;
 	}
 
+	bool bExistTargetPort = false;
+	struct json_object *filteringPort = json_object_array_get_idx(sam_policy, "filteringPort");
+	int filterport_len = json_object_array_length(filteringPort);
+	for (int i = 0; i < filterport_len; i++)
+	{
+		///
+		const char *flt_port = json_object_get_string(json_object_array_get_idx(filteringPort, i));
+		if (flt_port)
+		{
+			if ((atoi(flt_port)) == (get_ssh_listening_port()))
+			{
+				bExistTargetPort = true;
+				break;
+			}
+		}
+	}
+
+	if (bExistTargetPort == false)
+		return 0;
+
 	struct json_object *rule_list = json_object_object_get(sam_policy, "ruleList");
 	int rule_len = json_object_array_length(rule_list);
 
 	for (int i = 0; i < rule_len; i++)
 	{
-		struct json_object *rule 		= json_object_array_get_idx(rule_list, i);
-		struct json_object *ip_list 	= json_object_object_get(rule, "ipList");
+		struct json_object *rule = json_object_array_get_idx(rule_list, i);
+		struct json_object *ip_list = json_object_object_get(rule, "ipList");
 		struct json_object *account_list = json_object_object_get(rule, "acctIdList");
 		struct json_object *access_date = json_object_object_get(rule, "pmsTerm");
-		struct json_object *wday_list 	= json_object_object_get(rule, "wdayList");
+		struct json_object *wday_list = json_object_object_get(rule, "wdayList");
 
 		int ip_match = 0;
 		int ip_len = json_object_array_length(ip_list);
@@ -2941,7 +3064,7 @@ int validate_json_exceptionConnection(const char *json_file, const char *ip)
 	}
 
 	// exceptionIpList key
-	if (!json_object_object_get_ex(parsed_json, "exceptionIpList", &exceptionIpList))
+	if (!json_object_object_get_ex(parsed_json, "excpIpList", &exceptionIpList))
 	{
 		// fprintf(stderr, "Key 'exceptionIpList' not found\n");
 		json_object_put(parsed_json); // free memory
@@ -2972,7 +3095,7 @@ int validate_json_exceptionConnection(const char *json_file, const char *ip)
 		}
 	}
 
-	// free memory 
+	// free memory
 	json_object_put(parsed_json);
 	return 0; // net exist ip in list
 }

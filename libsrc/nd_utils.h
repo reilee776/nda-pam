@@ -9,78 +9,79 @@ void print_nd_banner_type2(void);
 void print_nd_warnning_msg(void);
 //	[etc]
 /*
-        //Function to generate a unique value for use as a session key.
-        //generate session id
+		//Function to generate a unique value for use as a session key.
+		//generate session id
 */
 void generate_unique_key(char *session_id, size_t length);
 
 /*
 
 */
-char* generate_unique_id();
+char *generate_unique_id();
 
 /*
-        //get timestamp
+		//get timestamp
 */
 void get_timestamp(char *buffer, size_t size);
 
 //      [STRING]
 
 /*
-        //space removal function
+		//space removal function
 */
 void trim_whitespace(char *str);
 
 /*
-        //read inf fuction
+		//read inf fuction
 */
 char *get_value_from_inf(const char *filename, const char *target_section, const char *target_key);
 
 //      [config]
 /*
-        // read config
+		// read config
 */
 int read_server_config(const char *section, char *ip_buffer, size_t ip_buffer_size, int *port);
-
 
 /*
 	//
 */
-void  getpamconf(struct st_pam_conf * pam_conf);
+void getpamconf(struct st_pam_conf *pam_conf);
 
 //      [network]
 /*
-        //
-        //socket connection function
+		//
+		//socket connection function
 */
 int connect_to_server(int *sock, const char *section);
 
+int connect_logger_server(int *sock);
+
 /*
-        // data transfer function
+		// data transfer function
 */
 int send_data(int sock, const char *data);
 
 /*
-        //data reception function
+		//data reception function
 */
 int receive_data(int sock, char *buffer, size_t buffer_size);
 
 /*
-        //
+		//
 */
 int check_server_connection(const char *ip, int port);
 
 //      [user item]
 /*
-        // get encrypted password
+		// get encrypted password
 */
-const char* get_encrypted_password_from_shadow_v2(const char* username);
+const char *get_encrypted_password_from_shadow_v2(const char *username);
 
 /*
-        // get encrypted password
-        // This is a function that retrieves a specific user's password hash from the /etc/shadow file.
+		// get encrypted password
+		// This is a function that retrieves a specific user's password hash from the /etc/shadow file.
 */
-const char* get_encrypted_password_from_shadow(const char* user);
+const char *get_encrypted_password_from_shadow(const char *user);
 
 /*
 	//JSON . json-c
@@ -88,44 +89,44 @@ const char* get_encrypted_password_from_shadow(const char* user);
 char *create_pam_archivelogdate_using_JSON(struct _archive_log logitem);
 
 /*
-        //JSON . json-c
+		//JSON . json-c
 */
-char *create_pamlogdata_using_JSON(const char * agtauth_no, const char * agtId, const char* action_type, const char* session_status, const char* account, const char* ipaddr, const char* session_key, const char* message);
+char *create_pamlogdata_using_JSON(const char *agtauth_no, const char *agtId, const char *action_type, const char *session_status, const char *account, const char *ipaddr, const char *session_key, const char *message);
 
 /*
-        //JSON . jsnon-c
+		//JSON . jsnon-c
 */
-char *create_sessionlogdata_using_JSON(const char * agtauth_no, const char * agtId,  const char* prefix, const char* session_id, const char* account, int uid, int gid, int isconsole, const char* ipaddr, long ltime, const char* session_key);
+char *create_sessionlogdata_using_JSON(const char *agtauth_no, const char *agtId, const char *prefix, const char *session_id, const char *account, int uid, int gid, int isconsole, const char *ipaddr, long ltime, const char *session_key);
 
 /*
-        //JSON . json-c
+		//JSON . json-c
 */
-char *create_sulogdata_using_JSON(const char * agtauth_no, const char * agtId, const char* account, const char* switch_account, const char* su_command, const char* client_ip, long time, const char* session_key);
+char *create_sulogdata_using_JSON(const char *agtauth_no, const char *agtId, const char *account, const char *switch_account, const char *su_command, const char *client_ip, long time, const char *session_key);
 
 /*
-        //
+		//
 */
 void initializeStorageBuffer();
 
 /*
-        //
+		//
 */
-int addStringtoStorageBuffer(const char* str);
+int addStringtoStorageBuffer(const char *str);
 
 /*
-        //
+		//
 */
-char* getFinalStorageBuffer();
+char *getFinalStorageBuffer();
 
 /*
-        //
+		//
 */
 void freeStorageBuffer();
 
 /*
 	//
 */
-int sending_data_to_logger(char * sAgentId, unsigned char iType, unsigned char iCode,/* unsigned char iVerMaj,*/char* iVer, char * data);
+int sending_data_to_logger(char *sAgentId, unsigned char iType, unsigned char iCode, /* unsigned char iVerMaj,*/ char *iVer, char *data);
 
 /*
 	//
@@ -140,7 +141,7 @@ char *getAgentId();
 /*
 	//
 */
-void setAgentId(char * id);
+void setAgentId(char *id);
 
 /*
 	//
@@ -163,7 +164,7 @@ void freePamPolicy(PamPolicy *pamPolicy);
 /*
 	//
 */
-//int isPamPolicyMatched(const PamPolicy *pamPolicy, const char *ipaddr, const char *account);
+// int isPamPolicyMatched(const PamPolicy *pamPolicy, const char *ipaddr, const char *account);
 Rule *isPamPolicyMatched(const PamPolicy *pamPolicy, const char *ipaddr, const char *account);
 
 /*
@@ -179,48 +180,48 @@ void get_local_ip(char *ip_buffer, size_t buffer_size);
 /*
 	//
 */
-void parse_ssh_connection(pam_handle_t *pamh, bool isConsole );
+void parse_ssh_connection(pam_handle_t *pamh, bool isConsole);
 
 /*
 	//
 */
-const char * getPamRuleFilePath(const char* sDataHomeDir);
+const char *getPamRuleFilePath(const char *sDataHomeDir);
 
 /*
 	//
 */
-const char * getPambakSulogFilePath(const char* sDataHomeDir);
+const char *getPambakSulogFilePath(const char *sDataHomeDir);
 
 /*
 	//
 */
-const char * getPambakSessionlogFilePath(const char* sDataHomeDir);
+const char *getPambakSessionlogFilePath(const char *sDataHomeDir);
 
 /*
 	//
 */
-const char * getPambaklogFilePath(const char* sDataHomeDir);
+const char *getPambaklogFilePath(const char *sDataHomeDir);
 
 /*
 	//
 */
-const char * getPamConfFilePath(const char * sDataHomeDir);
+const char *getPamConfFilePath(const char *sDataHomeDir);
 
 /*
 	//
 */
-const char * getPamLogFilePath(void);
+const char *getPamLogFilePath(void);
 
 /*
 	//
 */
 int is_valid_ip(const char *ip);
 
-//void get_env_vars(pid_t pid);
+// void get_env_vars(pid_t pid);
 /*
 	//
 */
-char* get_env_var(pid_t pid, const char* var_name);
+char *get_env_var(pid_t pid, const char *var_name);
 
 /*
 	//
@@ -230,7 +231,7 @@ void print_env_vars(pid_t pid);
 /*
 	//
 */
-char* read_env_variable(pid_t pid, const char* var_name) ;
+char *read_env_variable(pid_t pid, const char *var_name);
 
 /*
 	//
@@ -240,7 +241,7 @@ pid_t get_tty_pid(const char *tty_name);
 /*
 	//
 */
-char* resolve_actual_tty(pid_t pid);
+char *resolve_actual_tty(pid_t pid);
 
 /*
 	//
@@ -271,40 +272,40 @@ const char *get_value_as_string(const char *json_file, const char *key);
 	//
 */
 int check_pam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no, int *action, int *logging);
-//int check_pam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no);
+// int check_pam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no);
 
 /*
 	//
 */
 int check_sam_policy(const char *json_file, const char *ip, const char *account, int *pri_no, char **agt_auth_no);
 #ifdef _OLD_SRC_
-struct _archive_log* create_archive_log(
-    const char *prefix,
-    const char *agentId,
-    const char *agtAuthNo,
-    const char *sessionKey,
-    const char *time,
-    const char *connect_type,
-    const char *sourceIp,
-    const char *last_auth_type,
-//    const char *secur_step_no,
-    const char *sys_account,
-    const char *hiware_account,
-    const char *switch_sys_account,
-    const char *message,
-    const char * result,
-    const char *certTpCode,
-            const char *certAppTpCode,
-            const char *certSucesFailYn,
-            const char *certStepSeqNo
+struct _archive_log *create_archive_log(
+	const char *prefix,
+	const char *agentId,
+	const char *agtAuthNo,
+	const char *sessionKey,
+	const char *time,
+	const char *connect_type,
+	const char *sourceIp,
+	const char *last_auth_type,
+	//    const char *secur_step_no,
+	const char *sys_account,
+	const char *hiware_account,
+	const char *switch_sys_account,
+	const char *message,
+	const char *result,
+	const char *certTpCode,
+	const char *certAppTpCode,
+	const char *certSucesFailYn,
+	const char *certStepSeqNo
 
-) ;
+);
 #else // _OLD_SRC_
 
 /*
 	//
 */
-struct _archive_log* create_archive_log		(
+struct _archive_log *create_archive_log(
 
 	const char *svrConnStartTime,
 	const char *svrConnEndTime,
@@ -325,11 +326,9 @@ struct _archive_log* create_archive_log		(
 	const char *pamCertDtlAuthCode,
 
 	const char *certTpCode,
-        const char *certAppTpCode,
-        const char *certSucesFailYn,
-        const char *certStepSeqNo
-) ;
-
+	const char *certAppTpCode,
+	const char *certSucesFailYn,
+	const char *certStepSeqNo);
 
 #endif //_OLD_SRC_
 
@@ -356,17 +355,17 @@ int is_wday_time_valid(const struct json_object *wday_list, int current_wday, ti
 /*
 	//
 */
-int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday, char **agtAuthNo,int *action, int *logging);
+int validate_json_sampolicy(const char *json_file, const char *ip, const char *account, time_t current_time, int current_wday, char **agtAuthNo, int *action, int *logging);
 
 /*
 	//
 */
-int validate_json_sampolicy_without_date(const char *json_file, const char *ip, const char *account, char **agtAuthNo,int *action, int *logging);
+int validate_json_sampolicy_without_date(const char *json_file, const char *ip, const char *account, char **agtAuthNo, int *action, int *logging);
 
 /*
 	//
 */
-int validate_json_exceptionConnection(const char *json_file, const char *ip );
+int validate_json_exceptionConnection(const char *json_file, const char *ip);
 
 /*
 	//
@@ -417,7 +416,7 @@ int get_ssh_port();
 /*
 	//
 */
-int get_ssh_listening_port_from_cmd() ;
+int get_ssh_listening_port_from_cmd();
 
 /*
 	//
@@ -427,18 +426,18 @@ int get_current_ssh_port(pam_handle_t *pamh);
 /*
 	//
 */
-int get_ssh_port(pam_handle_t *pamh) ;
+int get_ssh_port(pam_handle_t *pamh);
 
 /*
 	//
 */
 // Function declaration
-char* read_config_value(const char* filename, const char* section, const char* key);
+char *read_config_value(const char *filename, const char *section, const char *key);
 
 /*
 	//
 */
 // Function to get environment variable (PAM or global)
-const char* get_env_variable(pam_handle_t *pamh, const char *key);
- 
+const char *get_env_variable(pam_handle_t *pamh, const char *key);
+
 #endif // ND_UTILS_H

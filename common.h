@@ -1,135 +1,164 @@
 #ifndef _COMMON_H__
 #define _COMMON_H__
 
-//#define _POSIX_C_SOURCE 200112L
+// #define _POSIX_C_SOURCE 200112L
 
 #include <netinet/in.h>
-#define IPV4_BUFFER_SIZE 	16
-#define NONE_STRING 		"NONE"
-#define MAX_OPMODE_LEN 		4
-#define MAX_EMERGENCYMODE_LEN 	8
+#define IPV4_BUFFER_SIZE 16
+#define NONE_STRING "NONE"
+#define MAX_OPMODE_LEN 4
+#define MAX_EMERGENCYMODE_LEN 8
 
-#define MAX_SEND_DATA 		1024
-#define MAX_RECV_DATA 		1024
-#define MAX_ENV_STR_LEN 	1024
-#define MAX_LOG_LEN 		1024
-#define MAX_ACCOUNT_LEN 	128
+#define MAX_SEND_DATA 1024
+#define MAX_RECV_DATA 1024
+#define MAX_ENV_STR_LEN 1024
+#define MAX_LOG_LEN 1024
+#define MAX_ACCOUNT_LEN 128
 
-#define DEFAULT_TIMEOUT 	180
+#define DEFAULT_TIMEOUT 180
 
-#define UNIQUE_ID_LENGTH 	16
+#define UNIQUE_ID_LENGTH 16
 
-#define ND_UUID_LENGTH		40
+#define ND_UUID_LENGTH 40
 
-#define ND_PREFIX_MAX_LEN       32
-#define ND_AGENTID_MAX_LEN      16
-#define ND_AGTAUTHNO_MAX_LEN    16
-#define ND_USERNUM_MAX_LEN	32
-#define ND_TIME_MAX_LEN		40
-#define ND_CONNECTTYPE_MAX_LEN  16
-#define ND_SOURCEIP_MAX_LEN     16
+#define ND_PREFIX_MAX_LEN 32
+#define ND_AGENTID_MAX_LEN 16
+#define ND_AGTAUTHNO_MAX_LEN 16
+#define ND_USERNUM_MAX_LEN 32
+#define ND_TIME_MAX_LEN 40
+#define ND_CONNECTTYPE_MAX_LEN 16
+#define ND_SOURCEIP_MAX_LEN 16
 #define ND_LASTAUTHTYPE_MAX_LEN 32
 #define ND_SECUR_STEP_NO_MAX_LEN 4
-#define ND_SYSACCOUNT_MAX_LEN   128
+#define ND_SYSACCOUNT_MAX_LEN 128
 #define ND_HIWAREACCOUNT_MAX_LEN 128
-#define ND_SWITCHUSER_MAX_LEN   128
-#define ND_LOGMSG_MAX_LEN       256
-#define ND_LOGRESULT_MAX_LEN	16
+#define ND_SWITCHUSER_MAX_LEN 128
+#define ND_LOGMSG_MAX_LEN 256
+#define ND_LOGRESULT_MAX_LEN 16
 
-#define ND_CERT_TP_CODE_MAX_LEN	4
+#define ND_CERT_TP_CODE_MAX_LEN 4
 #define ND_CERT_APP_TP_CODE_MAX_LEN 4
 #define ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN 4
 #define ND_CERT_STEP_SEQ_NO_MAX_LEN 8
 
-
-#define MAX_LINE_LENGTH 	1024
-#define MAX_KEY_LENGTH 		128
-#define MAX_VALUE_LENGTH 	256
+#define MAX_LINE_LENGTH 1024
+#define MAX_KEY_LENGTH 128
+#define MAX_VALUE_LENGTH 256
 
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define VENDER_NM 		"netand"
-#define PRODUCT_NM 		"hiagt"
+#define VENDER_NM "netand"
+#define PRODUCT_NM "hiagt"
 
-#define BIN_DIR 		"bin"
-#define DATE_DIR 		"data"
-#define CONFIG_DIR 		"conf"
-#define RULE_DIR 		"rule"
-#define LOG_DIR 		"log"
-#define SESSION_DIR 		"sess"
+#define BIN_DIR "bin"
+#define DATE_DIR "data"
+#define CONFIG_DIR "conf"
+#define RULE_DIR "rule"
+#define LOG_DIR "log"
+#define SESSION_DIR "sess"
 
 #ifdef _RROTOTYPE_DEFINE
-#define CONFIG_FILE 		"config.dat"
-#define SESSION_FILE 		"session.dat"
-#define SULOG_FILE 		"sulog.dat"
-#define RULE_FILE 		"rule.dat"
-#define COMMON_RULE_FILE	"common-rule"
-#define SURULE_FILE 		"su_rule.dat"
+#define CONFIG_FILE "config.dat"
+#define SESSION_FILE "session.dat"
+#define SULOG_FILE "sulog.dat"
+#define RULE_FILE "rule.dat"
+#define COMMON_RULE_FILE "common-rule"
+#define SURULE_FILE "su_rule.dat"
 #endif //_RROTOTYPE_DEFINE
 
-#define PAM_PRODUCT_NM					"nda-pam"
+#ifndef NI_NUMERICHOST
+#define NI_NUMERICHOST 1 /* Don't try to look up hostname.  */
+#endif
 
-#define CONFIG_FILE 					"nda-pam-config.conf"
-#define CONFIG_MGR_FILE					"agt-cnf"
+#ifndef NI_NUMERICSERV
+#define NI_NUMERICSERV 2 /* Don't convert port number to name.  */
+#endif
 
-#define BACKUP_LOG_FILE 				"nda-pam-backup.log"
-#define BACKUP_SESSION_LOG_FILE 			"nda-pam-session-backup.log"
-#define BACKUP_SULOG_FILE 				"nda-pam-sulog-backup.dat"
+#ifndef NI_NOFQDN
+#define NI_NOFQDN 4 /* Only return nodename portion.  */
+#endif
 
-#define BACKUP_LOG_FILE_WITHOUT_EXTENSION                "nda-pam-backup"
-#define BACKUP_SESSION_LOG_FILE_WITHOUT_EXTENSION        "nda-pam-session-backup"
-#define BACKUP_SULOG_FILE_WITHOUT_EXTENSION              "nda-pam-sulog-backup"
+#ifndef NI_NAMEREQD
+#define NI_NAMEREQD 8 /* Don't return numeric addresses.  */
+#endif
 
-#define LOGFILE_EXTENSION				".log"
+#ifndef NI_DGRAM
+#define NI_DGRAM 16 /* Look up UDP service rather than TCP.  */
+#endif
 
-#define BACKUP_LOG_LOCK_FILE 				"nda-pam-backup.lock"
-#define BACKUP_SESSION_LOG_LOCK_FILE 			"nda-pam-session-backup.lock"
-#define BACKUP_SULOG_LOCK_FILE 				"nda-pam-sulog-backup.lock"
+#ifndef NI_IDN
+#define NI_IDN 32 /* Convert name from IDN format.  */
+#endif
 
+#ifndef NI_IDN_ALLOW_UNASSIGNED
+#define NI_IDN_ALLOW_UNASSIGNED 64 /* Don't reject unassigned Unicode \
+					code points.  */
+#endif
 
-#define DEBUG_LOG_FILE 					"nda-pam.log"
+#ifndef NI_IDN_USE_STD3_ASCII_RULES
+#define NI_IDN_USE_STD3_ASCII_RULES 128
+#endif
 
-#define RULE_FILE 					"nda-pam-rule.dat"
-#define COMMON_RULE_FILE				"common-rule.json"
-#define SURULE_FILE 					"nda-pam-su-rule.dat"
+#define PAM_PRODUCT_NM "nda-pam"
 
-#define SHARED_DATA_KEY 				"my_shared_data"
+#define CONFIG_FILE "nda-pam-config.conf"
+#define CONFIG_MGR_FILE "agt-cnf"
 
-#define TMP_PATH 					"tmp"
-#define PIPE_NM 					"nd_spam_fifo"
+#define BACKUP_LOG_FILE "nda-pam-backup.log"
+#define BACKUP_SESSION_LOG_FILE "nda-pam-session-backup.log"
+#define BACKUP_SULOG_FILE "nda-pam-sulog-backup.dat"
 
-#define PAM_PIPE_FILE TMP_PATH 	"/" PIPE_NM
+#define BACKUP_LOG_FILE_WITHOUT_EXTENSION "nda-pam-backup"
+#define BACKUP_SESSION_LOG_FILE_WITHOUT_EXTENSION "nda-pam-session-backup"
+#define BACKUP_SULOG_FILE_WITHOUT_EXTENSION "nda-pam-sulog-backup"
+
+#define LOGFILE_EXTENSION ".log"
+
+#define BACKUP_LOG_LOCK_FILE "nda-pam-backup.lock"
+#define BACKUP_SESSION_LOG_LOCK_FILE "nda-pam-session-backup.lock"
+#define BACKUP_SULOG_LOCK_FILE "nda-pam-sulog-backup.lock"
+
+#define DEBUG_LOG_FILE "nda-pam.log"
+
+#define RULE_FILE "nda-pam-rule.dat"
+#define COMMON_RULE_FILE "common-rule.json"
+#define SURULE_FILE "nda-pam-su-rule.dat"
+
+#define SHARED_DATA_KEY "my_shared_data"
+
+#define TMP_PATH "tmp"
+#define PIPE_NM "nd_spam_fifo"
+
+#define PAM_PIPE_FILE TMP_PATH "/" PIPE_NM
 
 #ifdef _RROTOTYPE_DEFINE
-#define PAM_SETTING_FILE 	"/" VENDER_NM "/" CONFIG_DIR "/" CONFIG_FILE
-#define PAM_SESSION_FILE 	"/" VENDER_NM "/" SESSION_DIR "/" SESSION_FILE
-#define PAM_RULE_FILE 		"/" VENDER_NM "/" RULE_DIR "/" RULE_FILE
-#define PAM_SURULE_FILE 	"/" VENDER_NM "/" RULE_DIR "/" SURULE_FILE
-#define PAM_SULOG_FILE 		"/" VENDER_NM "/" LOG_DIR "/" SULOG_FILE
+#define PAM_SETTING_FILE "/" VENDER_NM "/" CONFIG_DIR "/" CONFIG_FILE
+#define PAM_SESSION_FILE "/" VENDER_NM "/" SESSION_DIR "/" SESSION_FILE
+#define PAM_RULE_FILE "/" VENDER_NM "/" RULE_DIR "/" RULE_FILE
+#define PAM_SURULE_FILE "/" VENDER_NM "/" RULE_DIR "/" SURULE_FILE
+#define PAM_SULOG_FILE "/" VENDER_NM "/" LOG_DIR "/" SULOG_FILE
 #endif //_PROTOTYPE_DEFINE
 
-#define PAM_SETTING_FILE 	"/" PRODUCT_NM "/" CONFIG_DIR "/" CONFIG_FILE
+#define PAM_SETTING_FILE "/" PRODUCT_NM "/" CONFIG_DIR "/" CONFIG_FILE
 
-#define PAM_RULE_FILE 		"/" PRODUCT_NM "/" RULE_DIR "/" RULE_FILE
-#define PAM_SURULE_FILE 	"/" PRODUCT_NM "/" RULE_DIR "/" SURULE_FILE
+#define PAM_RULE_FILE "/" PRODUCT_NM "/" RULE_DIR "/" RULE_FILE
+#define PAM_SURULE_FILE "/" PRODUCT_NM "/" RULE_DIR "/" SURULE_FILE
 #ifdef _OLD_SRC
-#define PAM_BACKUP_SULOG_FILE 	"/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SULOG_FILE
-#define PAM_BACKUP_LOG_FILE 	"/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_LOG_FILE
+#define PAM_BACKUP_SULOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SULOG_FILE
+#define PAM_BACKUP_LOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_LOG_FILE
 #define PAM_BACKUP_SESSION_LOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SESSION_LOG_FILE
 #else
-#define PAM_BACKUP_SULOG_FILE 	"/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/"  BACKUP_SULOG_FILE_WITHOUT_EXTENSION
-#define PAM_BACKUP_LOG_FILE 	"/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/"  BACKUP_LOG_FILE_WITHOUT_EXTENSION
-#define PAM_BACKUP_SESSION_LOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/"  BACKUP_SESSION_LOG_FILE_WITHOUT_EXTENSION
+#define PAM_BACKUP_SULOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SULOG_FILE_WITHOUT_EXTENSION
+#define PAM_BACKUP_LOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_LOG_FILE_WITHOUT_EXTENSION
+#define PAM_BACKUP_SESSION_LOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SESSION_LOG_FILE_WITHOUT_EXTENSION
 #endif //_OLD_SRC
 
-#define PAM_BACKUP_SULOG_LOCK_FILE 	"/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SULOG_LOCK_FILE
-#define PAM_BACKUP_LOG_LOCK_FILE 	"/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_LOG_LOCK_FILE
+#define PAM_BACKUP_SULOG_LOCK_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SULOG_LOCK_FILE
+#define PAM_BACKUP_LOG_LOCK_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_LOG_LOCK_FILE
 #define PAM_BACKUP_SESSION_LOCK_LOG_FILE "/" PRODUCT_NM "/" DATE_DIR "/" PAM_PRODUCT_NM "/" BACKUP_SESSION_LOG_LOCK_FILE
 
-#define PAM_LOG_FILE 		"/" PRODUCT_NM "/" LOG_DIR "/" DEBUG_LOG_FILE
-
-
+#define PAM_LOG_FILE "/" PRODUCT_NM "/" LOG_DIR "/" DEBUG_LOG_FILE
 
 #define PAM_LOOPIPADDR "127.0.0.1"
 
@@ -151,27 +180,26 @@
 #define STR_SU "su"
 #define STR_SUL "su-l"
 
-#define HIWARE_SECRETKEY_FORMAT			"HIWARE_SECRET_KEY=%s"
-#define HIWARE_ACTUAL_NAME_FORMAT 		"HIWARE_ACTUAL_NAME=%s"
-#define HIWARE_SESSION_KEY_FORMAT 		"HIWARE_SESSION_KEY=%s"
-#define HIWARE_AGTAUTHNO_KEY_FORMAT 	"HIWARE_AGTAUTH_NO=%s"
-#define HIWARE_SU_ACTUAL_NAME_FORMAT 	"HIWARE_SU_ACTUAL_NAME=%s"
-#define HIWARE_LOGIN_TYPE_FORMAT 		"HIWARE_LOGIN_TYPE=%s"
-#define HIWARE_ACCOUNT_FORMAT 			"HIWARE_SYSTEM_ACCOUNT=%s"
-#define HIWARE_REMOTE_ADDR 				"HIWARE_REMOTE_ADDR=%s"
-#define HIWARE_SSH_CLIENT_IP 			"HIWARE_SSH_CLIENT_IP=%s"
-#define HIWARE_SSH_CLIENT_PORT 			"HIWARE_SSH_CLIENT_PORT=%s"
-#define HIWARE_SSH_SERVER_IP			"HIWARE_SSH_SERVER_IP=%s"
-#define HIWARE_SSH_SERVER_PORT  		"HIWARE_SSH_SERVER_PORT=%s"
-#define HIWARE_SSH_SERVER_PORT2         "HIWARE_SSH_SERVER_PORT=%d"
-#define HIWARE_USER_NUMBER_FORMAT		"HIWARE_USER_NUMBER=%s"
-#define HIWARE_NOT_CONNECTAPI_FORMAT	"HIWARE_BYPASS=%s"
+#define HIWARE_SECRETKEY_FORMAT "HIWARE_SECRET_KEY=%s"
+#define HIWARE_ACTUAL_NAME_FORMAT "HIWARE_ACTUAL_NAME=%s"
+#define HIWARE_SESSION_KEY_FORMAT "HIWARE_SESSION_KEY=%s"
+#define HIWARE_AGTAUTHNO_KEY_FORMAT "HIWARE_AGTAUTH_NO=%s"
+#define HIWARE_SU_ACTUAL_NAME_FORMAT "HIWARE_SU_ACTUAL_NAME=%s"
+#define HIWARE_LOGIN_TYPE_FORMAT "HIWARE_LOGIN_TYPE=%s"
+#define HIWARE_ACCOUNT_FORMAT "HIWARE_SYSTEM_ACCOUNT=%s"
+#define HIWARE_REMOTE_ADDR "HIWARE_REMOTE_ADDR=%s"
+#define HIWARE_SSH_CLIENT_IP "HIWARE_SSH_CLIENT_IP=%s"
+#define HIWARE_SSH_CLIENT_PORT "HIWARE_SSH_CLIENT_PORT=%s"
+#define HIWARE_SSH_SERVER_IP "HIWARE_SSH_SERVER_IP=%s"
+#define HIWARE_SSH_SERVER_PORT "HIWARE_SSH_SERVER_PORT=%s"
+#define HIWARE_SSH_SERVER_PORT2 "HIWARE_SSH_SERVER_PORT=%d"
+#define HIWARE_USER_NUMBER_FORMAT "HIWARE_USER_NUMBER=%s"
+#define HIWARE_NOT_CONNECTAPI_FORMAT "HIWARE_BYPASS=%s"
 
-#define PAM_BAK_SSH_SERVER_IP        	"HIWARE_SSH_CLIENT_IP"
-#define PAM_BAK_SSH_SERVER_PORT      	"HIWARE_SSH_SERVER_PORT"
-#define PAM_BAK_SSH_CLIENT_IP        	"HIWARE_SSH_CLIENT_IP"
-#define PAM_BAK_SSH_CLIENT_PORT      	"HIWARE_SSH_CLIENT_PORT"
-
+#define PAM_BAK_SSH_SERVER_IP "HIWARE_SSH_CLIENT_IP"
+#define PAM_BAK_SSH_SERVER_PORT "HIWARE_SSH_SERVER_PORT"
+#define PAM_BAK_SSH_CLIENT_IP "HIWARE_SSH_CLIENT_IP"
+#define PAM_BAK_SSH_CLIENT_PORT "HIWARE_SSH_CLIENT_PORT"
 
 #define DB_PATH "/src/beetle/pam/nd_nix_pam/nd_nix_pam.db"
 
@@ -194,79 +222,76 @@
 */
 
 //[MODE]
-#define MODE_ON		1
-#define MODE_OFF	0
+#define MODE_ON 1
+#define MODE_OFF 0
 
 //[LOGGING]
-#define LOGGING_ON	1
-#define LOGGING_OFF	0
+#define LOGGING_ON 1
+#define LOGGING_OFF 0
 
 //[PAM_CERT_TP_CODE : PAM 인증 상세 코드]
-#define PAM_LOGIN	"01"
-#define PAM_LOGOUT	"02"
-#define PAM_SU_LOGIN	"03"
-#define PAM_SU_LOGOUT	"04"
-//#define PAM_LOGINFAIL	"03"
-//#define PAM_SU		"04"
+#define PAM_LOGIN "01"
+#define PAM_LOGOUT "02"
+#define PAM_SU_LOGIN "03"
+#define PAM_SU_LOGOUT "04"
+// #define PAM_LOGINFAIL	"03"
+// #define PAM_SU		"04"
 
-
-
-#define HEADER_PAM_AGENT_ID 	7
-#define HEADER_PAM_MESSG_CODE	6
+#define HEADER_PAM_AGENT_ID 7
+#define HEADER_PAM_MESSG_CODE 6
 #define HEADER_PAM_MSG_REQ_TYPE 1
 
 //[PAM_CERT_RST_CODE : PAM 인증 결과 코드]
 #define PAM_AUTH_SUCCESS "1"
-#define PAM_AUTH_FAIL	 "2"
+#define PAM_AUTH_FAIL "2"
 
 //[AGT_AUTH_TP_CODE : AGT 권한 구분 코드]
 #define PAM_AGT_AUTH_CODE "3"
 
 //[AGT_CONN_FORM_TP_CODE : 접속 방식 코드]
-#define PAM_CONN_BYPASS  "1"   //우회 접속
-#define PAM_CONN_CONSOLE "2"   //CONSOLE
+#define PAM_CONN_BYPASS "1"	 // 우회 접속
+#define PAM_CONN_CONSOLE "2" // CONSOLE
 
 //[SECUR_STEP_NO : 보안단계번호]
-#define PAM_SECUR_STEP_PCAP	"1"
-#define PAM_SECUR_STEP_NDSHELL	"2"
-#define PAM_SECUR_STEP_PAM	"3"
+#define PAM_SECUR_STEP_PCAP "1"
+#define PAM_SECUR_STEP_NDSHELL "2"
+#define PAM_SECUR_STEP_PAM "3"
 
 //[PAM_CERT_DTL_CODE : PAM 인증 상세 작업 코드]
-#define PAM_CERT_DTL_AUTH_OS	"01"
-#define PAM_CERT_DTL_AUTH_HIWAREAUTH	"02"
-#define PAM_CERT_DTL_AUTH_TWOFACT	"03"
-#define PAM_CERT_DTL_AUTH_PAM_RULE	"04"
-#define PAM_CERT_DTL_AUTH_SAM_RULE	"05"
+#define PAM_CERT_DTL_AUTH_OS "01"
+#define PAM_CERT_DTL_AUTH_HIWAREAUTH "02"
+#define PAM_CERT_DTL_AUTH_TWOFACT "03"
+#define PAM_CERT_DTL_AUTH_PAM_RULE "04"
+#define PAM_CERT_DTL_AUTH_SAM_RULE "05"
 
-#define PAM_ACT_RULE_ALLOW	1
-#define PAM_ACT_RULE_DENY	2
+#define PAM_ACT_RULE_ALLOW 1
+#define PAM_ACT_RULE_DENY 2
 
 //[SVR_CONN_FAIL_RSN_CODE : 접속 인증 실패]
-#define PAM_SVR_FAIL_OS_AUTH_FAIL	"04"
-#define PAM_SVR_FAIL_HI_AUTH_FAIL	"05"
-#define PAM_SVR_FAIL_TF_AUTH_FAIL	"06"
-#define PAM_SVR_FAIL_MISSING_INFO	"07"
-#define PAM_SVR_FAIL_UNAUTH_ACCESS      "09"
-#define PAM_SVR_FAIL_HIWARE_DOWNTIME    "12"
+#define PAM_SVR_FAIL_OS_AUTH_FAIL "04"
+#define PAM_SVR_FAIL_HI_AUTH_FAIL "05"
+#define PAM_SVR_FAIL_TF_AUTH_FAIL "06"
+#define PAM_SVR_FAIL_MISSING_INFO "07"
+#define PAM_SVR_FAIL_UNAUTH_ACCESS "09"
+#define PAM_SVR_FAIL_HIWARE_DOWNTIME "12"
 //
 
 //[SVR_CONN_RST_TP_CODE]
-#define PAM_SVR_CONN_RST_TP_CODE_NORMAL_SUCCESS		"1"
-#define PAM_SVR_CONN_RST_TP_CODE_NORMAL_FAILED		"2"
-#define PAM_SVR_CONN_RST_TP_CODE_EMERGC_SUCCESS		"3"
-#define PAM_SVR_CONN_RST_TP_CODE_EMERGC_FAILED		"4"
-
+#define PAM_SVR_CONN_RST_TP_CODE_NORMAL_SUCCESS "1"
+#define PAM_SVR_CONN_RST_TP_CODE_NORMAL_FAILED "2"
+#define PAM_SVR_CONN_RST_TP_CODE_EMERGC_SUCCESS "3"
+#define PAM_SVR_CONN_RST_TP_CODE_EMERGC_FAILED "4"
 
 /*
 	//
 */
-#define ENV_SSHCONNECTION 	"SSH_CONNECTION"
-#define ENV_HIWARE_SESSIONKEY 	"HIWARE_SESSION_KEY"
-#define ENV_HIWARE_AGTAUTHNO  	"HIWARE_AGTAUTH_NO"
-#define ENV_HIWARE_HOME		"HIAGT_HOME"
-#define ENV_HIWARE_USER_NUMBER	"HIWARE_USER_NUMBER"
+#define ENV_SSHCONNECTION "SSH_CONNECTION"
+#define ENV_HIWARE_SESSIONKEY "HIWARE_SESSION_KEY"
+#define ENV_HIWARE_AGTAUTHNO "HIWARE_AGTAUTH_NO"
+#define ENV_HIWARE_HOME "HIAGT_HOME"
+#define ENV_HIWARE_USER_NUMBER "HIWARE_USER_NUMBER"
 
-#define ND_PAM_VERSION	"0.0.01.001"
+#define ND_PAM_VERSION "0.0.01.001"
 
 extern char *g_sDataIssueKey;
 extern char *g_sDataRandomKey;
@@ -274,12 +299,12 @@ extern char *g_sDataAuthKey;
 extern char *g_sDataSecretKey;
 extern char *g_sUserNumber;
 
-extern char * g_sDataUserLoginResult;
-extern char * g_sDataTemporaryAccessKey;
-extern char * g_sDataHiwareUserNumber;
+extern char *g_sDataUserLoginResult;
+extern char *g_sDataTemporaryAccessKey;
+extern char *g_sDataHiwareUserNumber;
 
-extern char * g_sDataProductNm;
-extern char * g_sDataRootDir;
+extern char *g_sDataProductNm;
+extern char *g_sDataRootDir;
 
 extern char g_sDataRandomUrl[MAX_URL_LEN];
 extern char g_sDataUserLoginUrl[MAX_URL_LEN];
@@ -287,7 +312,7 @@ extern char g_sDataSystemLoginUrl[MAX_URL_LEN];
 extern char g_sDataTwoFactLoginIrl[MAX_URL_LEN];
 extern int g_nDataSshPort;
 
-extern char * g_sConfFilePath;
+extern char *g_sConfFilePath;
 
 extern char g_sDataAgentId[2];
 
@@ -297,7 +322,7 @@ extern char g_sDataAgentId[2];
 */
 #define ND_SULOG_FORMAT "%s|%s|%s|%s|%s|%s|"
 
-//#define ND_PAMLOG_FORMAT_V2 "<$@>iMsgType@>%d@>iMsgCode@>%d@>iMsgVerMaj@>%d@>iMsgVerMin@>%d@>iMsgTotalSize@>%d@>action_type@>%s@>session_status@>%s@>account@>%s@>ipaddr@>%s@>sessionKey@>%s@>message@>%s$>"
+// #define ND_PAMLOG_FORMAT_V2 "<$@>iMsgType@>%d@>iMsgCode@>%d@>iMsgVerMaj@>%d@>iMsgVerMin@>%d@>iMsgTotalSize@>%d@>action_type@>%s@>session_status@>%s@>account@>%s@>ipaddr@>%s@>sessionKey@>%s@>message@>%s$>"
 #define ND_PAMLOG_FORMAT_V2 "<$@>iMsgType@>%d@>iMsgCode@>%d@>iMsgVerMaj@>%d@>iMsgVerMin@>%d@>iMsgTotalSize@>%d@>action_type@>%s@>session_status@>%s@>account@>%s@>ipaddr@>%s@>sessionKey@>%s@>message@>%s$>"
 #define ND_SULOG_FORMAT_V2 "<$@>iMsgType@>%d@>iMsgCode@>%d@>iMsgVerMaj@>%d@>iMsgVerMin@>%d@>iMsgTotalSize@>%d@>account@>%s@>switch_account@>%s@>su_command@>%s@>client_ip@>%s@>time@>%ld@>%s$>"
 #define ND_SESSIONLOG_FORMAT_V2 "<$@>iMsgType@>%d@>iMsgCode@>%d@>iMsgVerMaj@>%d@>iMsgVerMin@>%d@>iMsgTotalSize@>%d@>prefix@>%s@>session_id@>%s@>account@>%s@>uid@>%d@>gid@>%d@>isconsole@>%d@>ipaddr@>%s@>time@>%ld@>%s$>"
@@ -309,14 +334,22 @@ extern char g_sDataAgentId[2];
 #define PAM_DATA_FAILCNT "ND_PAM_FAILCOUNT"
 
 /*
+	// contentSimpleType STRING
+*/
+#define PAM_CONTENTSIMPLETYPE_MSG_VERIFSUCCESS "AdditionalVerificationRequiredResult"
+#define PAM_CONTENTSIMPLETYPE_MSG_NORMALERROR "ErrorResult"
+#define PAM_CONTENTSIMPLETYPE_MSG_REGOTPREQUEST "RegisterOtpRequiredResult"
+
+/*
 	// default port <api port>
 */
-#define PAM_HIAUTH_DEFAULT_PORT 1004
+#define PAM_HIAUTH_DEFAULT_PORT 11200
+#define PAM_LOGGER_DEFAULT_PORT 9999
 
 /*
 	// config section key
 */
-#define SECTION_NM_PAM_CONF "PAM_CONF"
+#define SECTION_NM_PAM_CONF "PAM_INFO"
 #define SECTION_NM_HIAUTH_CONF "HIAUTH_CONF"
 #define SECTION_NM_HILOGER_CONF "HILOGER_CONF"
 #define SECTION_NM_TWOFACT_CONF "TOWFACT_CONF"
@@ -324,65 +357,74 @@ extern char g_sDataAgentId[2];
 
 //
 #define SECTION_NM_AGENT_INFO_CONF "AGENT_INFO"
-
+#define SECTION_NM_SERVER_INFO_CONF "SERVER_INFO"
 
 /*
 	// config value data
 */
-#define SET_MODE_ON 	"ON"
-#define SET_MODE_OFF 	"OFF"
+#define SET_MODE_ON "ON"
+#define SET_MODE_OFF "OFF"
 #define SET_MODE_BYPASS "BYPASS"
-#define SET_MODE_BLOCK 	"BLOCK"
+#define SET_MODE_BLOCK "BLOCK"
 
-#define CONF_VALUE_YES 	"YES"
-#define CONF_VALUE_NO 	"NO"
+#define CONF_VALUE_YES "YES"
+#define CONF_VALUE_NO "NO"
 
 #define CONF_VALUE_JSON "JSON"
 #define CONF_VALUE_TEXT "TEXT"
 
 /*
+	// config default setting
+*/
+#define DEF_AGTSVRABLEYN "1"
+#define DEF_PAMCERTYN "1"
+#define DEF_STATEGATRYN "1"
+
+/*
 	// config section value
 */
-#define PAM_CONF_KEY_PAM_MODE 		"PAM_MODE"
-#define PAM_CONF_KEY_SU_CONTROL 	"PAM_SU_CONTROL"
-#define PAM_CONSOLE_CONTROL 		"PAM_CONSOLE_CONTROL"
-#define PAM_LOG_MODE 				"PAM_LOG_MODE"
-#define PAM_AUTHSVR_LINKAGE 		"PAM_AUTHSVR_LINKAGE"
-#define PAM_AUTHSVR_EMERGENCY_ACTION 	"PAM_AUTHSVR_EMERGENCY_ACTION"
-#define PAM_AUTHSVR_TIMEOUT 		"PAM_AUTHSVR_TIMEOUT"
-#define PAM_AUTHSVR_USESSL 			"SERVER_USE_SSL"
+#define PAM_CONF_KEY_PAM_MODE "PAM_MODE"
+#define PAM_CONF_KEY_SU_CONTROL "PAM_SU_CONTROL"
+#define PAM_CONSOLE_CONTROL "PAM_CONSOLE_CONTROL"
+#define PAM_LOG_MODE "PAM_LOG_MODE"
+#define PAM_AUTHSVR_LINKAGE "PAM_AUTHSVR_LINKAGE"
+#define PAM_AUTHSVR_EMERGENCY_ACTION "PAM_AUTHSVR_EMERGENCY_ACTION"
+#define PAM_AUTHSVR_TIMEOUT "PAM_AUTHSVR_TIMEOUT"
+#define PAM_AUTHSVR_USESSL "SERVER_USE_SSL"
 
-//USE_AGT_CONF
+// USE_AGT_CONF
 #define PAM_AUTH_EMERGENCY_BYPASS_ON "AUTH_EMERGENCY_BYPASS_ON"
-#define PAM_AUTH_SERVER_IP			"AUTH_SERVER_IP"
-#define PAM_AUTH_SERVER_PORT		"AUTH_SERVER_PORT"
+#define PAM_AUTH_SERVER_IP "AUTH_SERVER_IP"
+#define PAM_AUTH_SERVER_PORT "AUTH_SERVER_PORT"
 
-#define PAM_CONF_KEY_SERVERIP 		"SERVER_IP"
-#define PAM_CONF_KEY_SERVERPORT 	"SERVER_PORT"
-#define PAM_CONF_KEY_SERVERUSE 		"SERVER_USE"
+#define PAM_CONF_KEY_AUTH_SERVER_IP "AUTH_SERVER_IP"
+#define PAM_CONF_KEY_AUTH_SERVER_PORT "AUTH_SERVER_PORT"
 
-#define PAM_CONF_KEY_TRANS_FORMAT 	"TRANS_FORMAT"
+#define PAM_CONF_KEY_SERVERIP "SERVER_IP"
+#define PAM_CONF_KEY_SERVERPORT "SERVER_PORT"
+#define PAM_CONF_KEY_SERVERUSE "SERVER_USE"
 
-#define PAM_CONF_KEY_SYSTEM_ID 		"SYSTEM_ID"
-#define PAM_CONF_KEY_SYSTEM_PW 		"SYSTEM_PW"
+#define PAM_CONF_KEY_TRANS_FORMAT "TRANS_FORMAT"
 
-#define PAM_LOGIN_RESULT_TRUE		"true"
-#define PAM_LOGIN_RESULT_FALSE		"false"
+#define PAM_CONF_KEY_SYSTEM_ID "SYSTEM_ID"
+#define PAM_CONF_KEY_SYSTEM_PW "SYSTEM_PW"
 
+#define PAM_LOGIN_RESULT_TRUE "true"
+#define PAM_LOGIN_RESULT_FALSE "false"
 
-//contentSimpleType
-#define PAM_JSON_KEY_NM_CONTENTSIMPLETYPE	"contentSimpleType"
-#define PAM_JSON_KEY_VALUE_RET_SUCCESS		"AdditionalVerificationRequiredResult"
-#define PAM_JSON_KEY_VALUE_RET_FAILED		"ErrorResult"
-#define PAM_JSON_KEY_VALUE_RET_REQREG		"RegisterOtpRequiredResult"
+// contentSimpleType
+#define PAM_JSON_KEY_NM_CONTENTSIMPLETYPE "contentSimpleType"
+#define PAM_JSON_KEY_VALUE_RET_SUCCESS "AdditionalVerificationRequiredResult"
+#define PAM_JSON_KEY_VALUE_RET_FAILED "ErrorResult"
+#define PAM_JSON_KEY_VALUE_RET_REQREG "RegisterOtpRequiredResult"
 
 /*
 	// JSON KEY
 */
-#define PAM_JSON_KEY_NM_RESULTCODE	"resultCode"
-#define PAM_JSON_KEY_NM_CONTENT		"content"
-#define PAM_JSON_KEY_NM_LOGINRESULT	"loginResult"
-#define PAM_JSON_KEY_NM_TMPACCESSKEY	"temporaryAccessKey"
+#define PAM_JSON_KEY_NM_RESULTCODE "resultCode"
+#define PAM_JSON_KEY_NM_CONTENT "content"
+#define PAM_JSON_KEY_NM_LOGINRESULT "loginResult"
+#define PAM_JSON_KEY_NM_TMPACCESSKEY "temporaryAccessKey"
 
 /*
 	//string format
@@ -450,11 +492,11 @@ enum _pack_msg_code_
 */
 enum log_index
 {
-	NDLOG_INF 	= 0,
-	NDLOG_WAN	,
-	NDLOG_DBG	,
-	NDLOG_TRC	,
-	NDLOG_ERR	,
+	NDLOG_INF = 0,
+	NDLOG_WAN,
+	NDLOG_DBG,
+	NDLOG_TRC,
+	NDLOG_ERR,
 	NDLOG_MAX
 };
 
@@ -557,9 +599,9 @@ enum st_pam_switch_allow
 */
 enum st_pam_user_rule_action
 {
-	PAM_USER_RULE_ACT_NONE	=0,
-	PAM_USER_RULE_ACT_ALLOW	,
-	PAM_USER_RULE_ACT_DENY	,
+	PAM_USER_RULE_ACT_NONE = 0,
+	PAM_USER_RULE_ACT_ALLOW,
+	PAM_USER_RULE_ACT_DENY,
 
 	PAM_USER_RULE_ACT_MAX
 };
@@ -645,7 +687,6 @@ struct pam_user_info
 	char mfa_info[256];	 // 추가 인증 정보 (MFA 등)
 	char agtAuthNo[16];
 	char agtId[16];
-	
 };
 
 struct pam_working_history_info
@@ -767,24 +808,24 @@ struct _msg_header_
 	unsigned char iMsgVerMin;
 
 	unsigned int iMsgTotalSize;
-	
-} __attribute__((packed)) ;
-#else //_OLD_SRC
+
+} __attribute__((packed));
+#else  //_OLD_SRC
 struct _msg_header_
 {
-        unsigned char sReqTraceId[36];
+	unsigned char sReqTraceId[36];
 
-	unsigned short  sAgentId;
+	unsigned short sAgentId;
 
-        unsigned char iMsgType;
+	unsigned char iMsgType;
 
-        unsigned char iMsgCode;
+	unsigned char iMsgCode;
 
-        unsigned char iMsgVer[10];
+	unsigned char iMsgVer[10];
 
-        unsigned int iMsgTotalSize;
+	unsigned int iMsgTotalSize;
 
-} __attribute__((packed)) ;
+} __attribute__((packed));
 #endif //_OLD_SRC
 
 #ifdef _OLD_SRC
@@ -795,7 +836,7 @@ struct _archive_log
 	char agtAuthNo[ND_AGTAUTHNO_MAX_LEN];
 	char pamAgtAuthNo[ND_AGTAUTHNO_MAX_LEN];
 	char userNumber[ND_USERNUM_MAX_LEN];
-	int  sslPort;
+	int sslPort;
 	char sessionKey[ND_UUID_LENGTH];
 	char time[ND_TIME_MAX_LEN];
 	char connect_type[ND_CONNECTTYPE_MAX_LEN];
@@ -813,46 +854,45 @@ struct _archive_log
 	char certSucesFailYn[ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN];
 	char certStepSeqNo[ND_CERT_STEP_SEQ_NO_MAX_LEN];
 };
-	
-#else //OLD_SRC
+
+#else // OLD_SRC
 struct _archive_log
 {
-	char    svrConnStartTime[ND_TIME_MAX_LEN];
-        char    svrConnEndTime[ND_TIME_MAX_LEN];
-        char    svrConnRstTpCode [4];
-        char    svrConnFailRsnCode [4];
-        char    agtNo[16];
-        char    agtConnFormTpCode[4];
-        char    agtAuthNo[ND_AGTAUTHNO_MAX_LEN];
-        char    portNo[8];
-        char    userIp[ND_SOURCEIP_MAX_LEN];
-        char    securStepNo[ND_SECUR_STEP_NO_MAX_LEN];
-        char    svrConnSessKey[ND_UUID_LENGTH];
-        char    connAcctId[ND_SYSACCOUNT_MAX_LEN];
-	char 	switchAcctId[ND_SYSACCOUNT_MAX_LEN];
-        char    pamAgtAuthNo[ND_AGTAUTHNO_MAX_LEN];
-        char    userNo[18];
-        char    pamCertDtlCode[4];
-	char    pamCertDtlAuthCode[4];
+	char svrConnStartTime[ND_TIME_MAX_LEN];
+	char svrConnEndTime[ND_TIME_MAX_LEN];
+	char svrConnRstTpCode[4];
+	char svrConnFailRsnCode[4];
+	char agtNo[16];
+	char agtConnFormTpCode[4];
+	char agtAuthNo[ND_AGTAUTHNO_MAX_LEN];
+	char portNo[8];
+	char userIp[ND_SOURCEIP_MAX_LEN];
+	char securStepNo[ND_SECUR_STEP_NO_MAX_LEN];
+	char svrConnSessKey[ND_UUID_LENGTH];
+	char connAcctId[ND_SYSACCOUNT_MAX_LEN];
+	char switchAcctId[ND_SYSACCOUNT_MAX_LEN];
+	char pamAgtAuthNo[ND_AGTAUTHNO_MAX_LEN];
+	char userNo[18];
+	char pamCertDtlCode[4];
+	char pamCertDtlAuthCode[4];
 
-        char    certTpCode[ND_CERT_TP_CODE_MAX_LEN];
-        char    certAppTpCode[ND_CERT_APP_TP_CODE_MAX_LEN];
-        char    certSucesFailYn[ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN];
-        char    certStepSeqNo[ND_CERT_STEP_SEQ_NO_MAX_LEN];
-
+	char certTpCode[ND_CERT_TP_CODE_MAX_LEN];
+	char certAppTpCode[ND_CERT_APP_TP_CODE_MAX_LEN];
+	char certSucesFailYn[ND_CERT_APP_SUCES_FAIL_YN_MAX_LEN];
+	char certStepSeqNo[ND_CERT_STEP_SEQ_NO_MAX_LEN];
 };
 
-#endif 
-
+#endif
 
 #define MSG_HEADER_SIZE 8
 
 #define MAX_IP_LIST 10
 #define MAX_ACCOUNT_LIST 10
 
-typedef struct {
+typedef struct
+{
 	int priNo;
-	const char * agtAuthNo;
+	const char *agtAuthNo;
 	char **ipList;
 	int action;
 	int logging;
@@ -861,18 +901,20 @@ typedef struct {
 	int accountCount;
 } Rule;
 
-typedef struct {
+typedef struct
+{
 	Rule *rules;
 	int ruleCount;
 } PamPolicy;
 
 // Structure definition
-typedef struct {
-        char *current_user;
-        char *target_user;
-        char *remote_host;
-        char *tty;
-        int type; // 1: Console, 2: SSH, 3: su
+typedef struct
+{
+	char *current_user;
+	char *target_user;
+	char *remote_host;
+	char *tty;
+	int type; // 1: Console, 2: SSH, 3: su
 } SessionInfo;
 
 #endif //_COMMON_H__
