@@ -434,6 +434,7 @@ int get_ssh_port(pam_handle_t *pamh);
 // Function declaration
 char *read_config_value(const char *filename, const char *section, const char *key);
 
+char *nd_strdup(const char *s);
 /*
 	//
 */

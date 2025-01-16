@@ -44,6 +44,8 @@
 char *g_log_storage_buffer;
 size_t g_current_length = 0;
 
+#define strdup(s) nd_strdup(s)
+
 // char* Path = "/default/path";
 /*
 	//Banner image displayed upon successful authentication.
@@ -3484,4 +3486,22 @@ const char *get_env_variable(pam_handle_t *pamh, const char *key)
 	// If not found in PAM, check global environment
 	value = getenv(key);
 	return value; // Return global environment value or NULL if not found
+}
+
+char *nd_strdup(const char *s)
+{
+	if (s == NULL)
+	{
+		return NULL;
+	}
+
+	size_t len = strlen(s) + 1; // +1 for NULL terminator
+	char *copy = (char *)malloc(len);
+	if (copy == NULL)
+	{
+		return NULL;
+	}
+
+	memcpy(copy, s, len);
+	return copy;
 }
