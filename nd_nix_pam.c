@@ -1244,6 +1244,8 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 	(void)argc;
 	(void)argv;
 
+	nd_log(NDLOG_INF, "pam_sm_authenticate-------------------");
+
 	int retval = 0; //, sock = 0;
 	bool isSuSession = false;
 	bool isNdShell = false;
