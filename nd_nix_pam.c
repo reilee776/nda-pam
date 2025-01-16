@@ -1393,7 +1393,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags,
 	char *auth_server_ip = get_value_from_inf(g_sConfFilePath, SECTION_NM_SERVER_INFO_CONF, PAM_AUTH_SERVER_IP);
 	char *auth_server_port = get_value_from_inf(g_sConfFilePath, SECTION_NM_SERVER_INFO_CONF, PAM_AUTH_SERVER_PORT);
 	char *authsvr_emergency_act = get_value_from_inf(g_sConfFilePath, SECTION_NM_AGENT_INFO_CONF, PAM_AUTH_EMERGENCY_BYPASS_ON);
-	const char *_stateGatrYn = get_value_As_string(getPamRuleFilePath(sDataHomeDir), "stateGatrYn");
+	const char *_stateGatrYn = get_value_as_string(getPamRuleFilePath(sDataHomeDir), "stateGatrYn");
 
 	if (_stateGatrYn == NULL)
 		_stateGatrYn = DEF_STATEGATRYN;
@@ -1960,7 +1960,7 @@ PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh, int flags,
 	if (g_sConfFilePath == NULL)
 		g_sConfFilePath = strdup(getPamConfFilePath(sDataHomeDir));
 
-	const char *_stateGatrYn = get_value_As_string(getPamRuleFilePath(sDataHomeDir), "stateGatrYn");
+	const char *_stateGatrYn = get_value_as_string(getPamRuleFilePath(sDataHomeDir), "stateGatrYn");
 	if (_stateGatrYn == NULL)
 		_stateGatrYn = DEF_STATEGATRYN;
 
